@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    margin-right: 20px;
+}
+
+.menu {
+    list-style-type: none;
+    display: flex;
+}
+
+.menu li {
+    margin-right: 20px;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background-color: #333;
+    padding: 10px;
+}
+
+.submenu li {
+    margin: 10px 0;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.games {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.category {
+    text-align: center;
+}
+
+.game-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.game-list li {
+    margin: 10px 0;
+}
+
+.comments {
+    margin: 20px 0;
+}
+
+.comment {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Loja de Games</div>
+            <ul class="menu">
+                <li><a href="loja.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Categorias</a>
+                    <ul class="submenu">
+                        <li><a href="#">Xbox</a></li>
+                        <li><a href="#">Playstation</a></li>
+                        <li><a href="#">Nintendo</a></li>
+                    </ul>
+                </li>
+                <li><a href="user.html">Usuário</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="text" placeholder="Pesquisar jogos...">
+            <button>Buscar</button>
+        </div>
+    </header>
+    
+    <section class="games">
+        <div class="category">
+            <h2>Xbox</h2>
+            <ul class="game-list">
+                <li><a href="#">Jogo Xbox 1</a></li>
+                <li><a href="#">Jogo Xbox 2</a></li>
+                <!-- Adicione mais jogos aqui -->
+            </ul>
+        </div>
+    
+        <div class="category">
+            <h2>Playstation</h2>
+            <ul class="game-list">
+                <li><a href="#">Jogo PS4 1</a></li>
+                <li><a href="#">Jogo PS4 2</a></li>
+                <!-- Adicione mais jogos aqui -->
+            </ul>
+        </div>
+    
+        <div class="category">
+            <h2>Nintendo</h2>
+            <ul class="game-list">
+                <li><a href="#">Jogo Switch 1</a></li>
+                <li><a href="#">Jogo Switch 2</a></li>
+                <!-- Adicione mais jogos aqui -->
+            </ul>
+        </div>
+    </section>
+    
+    <section class="comments">
+        <h2>Comentários Gerais</h2>
+        <div class="comment">
+            <p>Comentário 1...</p>
+            <span>Usuário123</span>
+        </div>
+        <div class="comment">
+            <p>Comentário 2...</p>
+            <span>Player456</span>
+        </div>
+        <!-- Adicione mais comentários aqui -->
+    </section>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seleciona o elemento de input e o botão de busca
+            const searchInput = document.querySelector('.search input');
+            const searchButton = document.querySelector('.search button');
+    
+            // Adiciona um ouvinte de evento ao botão de busca
+            searchButton.addEventListener('click', function () {
+                // Obtém o valor do campo de pesquisa
+                const searchTerm = searchInput.value;
+    
+                // Realiza a requisição ao servidor com o termo de pesquisa
+                fetch('/')
+    .then(response => response.json())
+    .then(data => {
+        // Atualiza dinamicamente a seção de jogos com os resultados da consulta
+        updateGameSection(data.xboxGames, 'Xbox');
+        updateGameSection(data.playstationGames, 'Playstation');
+        updateGameSection(data.nintendoGames, 'Nintendo');
+    })
+    .catch(error => console.error('Erro na requisição:', error));
+            });
+    
+            // Função para atualizar dinamicamente a seção de jogos
+            function updateGameSection(games) {
+                // Seleciona a lista de jogos
+                const gameList = document.querySelector('.game-list');
+    
+                // Limpa a lista atual
+                gameList.innerHTML = '';
+    
+                // Adiciona os novos jogos à lista
+                games.forEach(game => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <a href="#">${game.nome}</a>
+                        <p>${game.descricao}</p>
+                        <p>Preço: $${game.preco.toFixed(2)}</p>
+                    `;
+                    gameList.appendChild(listItem);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

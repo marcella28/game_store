@@ -1,11 +1,302 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Store</title>
+    <title>Início</title>
+    <style>
+        body {
+            background-color: #fff5eb; /* Substitua pela cor desejada */
+        }
+
+        #title {
+            width: 100%;
+            height: 100px;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #title h1 {
+            font-size: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #a2e355; /* Substitua pela cor desejada */
+            width: 900px;
+            height: 100px;
+            border-radius: 10px;
+            border: 4px groove #ff0000; /* Substitua pela cor desejada */
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .m-10 {
+            margin: 2.5rem;
+        }
+
+      
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-l {
+            font-size: 1.125rem;
+        }
+
+        .m-5 {
+            margin: 1.25rem;
+        }
+
+        .m-6 {
+            margin: 1.5rem;
+        }
+
+        .bg-lime-500 {
+            background-color: #a2e355; /* Substitua pela cor desejada */
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .border {
+            border: 3px groove #ff0000; /* Substitua pela cor desejada */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fixed {
+            position: fixed;
+        }
+
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .z-50 {
+            z-index: 50;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .h-full {
+            height: 100%;
+        }
+
+        .bg-gray-900 {
+            background-color: #111827; /* Substitua pela cor desejada */
+        }
+
+        .opacity-50 {
+            opacity: 0.5;
+        }
+
+        .modal-container {
+            background-color: #ffffff; /* Substitua pela cor desejada */
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 0.375rem; /* Substitua pelo valor desejado */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .block {
+            display: block;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .text-gray-600 {
+            color: #718096; /* Substitua pela cor desejada */
+        }
+
+        .border-gray-500 {
+            border-color: #718096; /* Substitua pela cor desejada */
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
+        .p-2 {
+            padding: 0.5rem;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .email {
+            type: email;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .bg-blue-500 {
+            background-color: #3b82f6; /* Substitua pela cor desejada */
+        }
+
+        .text-white {
+            color: #ffffff; /* Substitua pela cor desejada */
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .bg-lime-50 {
+            background-color: #f3f7fe; /* Substitua pela cor desejada */
+        }
+    </style>
 </head>
 <body>
+    <div id="title" class="w-full h-[100px] m-10  flex justify-center items-center">
+        <h1 class="text-6xl flex justify-center items-center bg-lime-300 w-[900px] h-[100px] rounded-[10px] border border-red-500 border-groove border-[4px]">Amigo Oculto Online</h1>
+    </div>
+    <div class="flex justify-center items-center">
+        <div class="m-10 w-[1100px]   flex-col ">
+            <h2 class="text-xl text-center m-10">Olá! Bem-vindo à nossa plataforma de amigo oculto online! Faça seu cadastro e participe de nossos eventos públicos disponíveis, ou, se preferir, crie e personalize o seu!</h2>
+            <h2 class="text-l text-center m-5"><strong>Observação:</strong> Caso seja um usuário já cadastrado, vá direto para a página de eventos e insira suas credenciais de acesso.</h2>
+        </div>
+    </div>
+    <div class="flex justify-center items-center m-6 ">
+        <!-- Botão para abrir o modal -->
+        <button onclick="openModal()" class="bg-lime-500  px-4 py-2 rounded m-4 border border-red-500 border-groove border-[3px]"> <strong>Fazer meu cadastro</strong></button>
+        <button onclick="location = 'eventos.html'" class="bg-lime-500  px-4 py-2 rounded m-4 border border-red-500 border-groove border-[3px]"> <strong>Página de eventos</strong></button>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <!-- Conteúdo do modal -->
+            <div class="modal-content py-4 text-left px-6">
+                <h2 class="text-2xl font-bold mb-3">Cadastro</h2>
+                <form id="cadastroForm">
+                    <label class="block text-sm font-medium text-gray-600 mb-1" for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" class="border p-2 w-full mb-4" required>
+                
+                    <label class="block text-sm font-medium text-gray-600 mb-1" for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="border p-2 w-full mb-4" required>
+                
+                    <button type="button" onclick="cadastrarUsuario()" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Cadastrar</button>
+                </form>
+                <button onclick="closeModal()" class="bg-lime-50 text-white px-4 py-2 rounded mt-4">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seleciona o elemento de input e o botão de busca
+            const searchInput = document.querySelector('.search input');
+            const searchButton = document.querySelector('.search button');
     
+            // Adiciona um ouvinte de evento ao botão de busca
+            searchButton.addEventListener('click', function () {
+                // Obtém o valor do campo de pesquisa
+                const searchTerm = searchInput.value;
+    
+                // Realiza a requisição ao servidor com o termo de pesquisa
+                fetch('/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Função para atualizar dinamicamente a seção de jogos
+                        function updateGameSection(games, categoryName) {
+                            // Seleciona a lista de jogos
+                            const gameList = document.querySelector(`.${categoryName.toLowerCase()} .game-list`);
+    
+                            // Limpa a lista atual
+                            gameList.innerHTML = '';
+    
+                            // Adiciona os novos jogos à lista
+                            games.forEach(game => {
+                                const listItem = document.createElement('li');
+                                listItem.innerHTML = `
+                                    <a href="#">${game.nome}</a>
+                                    <p>${game.descricao}</p>
+                                    <p>Preço: $${game.preco.toFixed(2)}</p>
+                                `;
+                                gameList.appendChild(listItem);
+                            });
+                        }
+    
+                        // Atualiza dinamicamente a seção de jogos com os resultados da consulta
+                        updateGameSection(data.xboxGames, 'Xbox');
+                        updateGameSection(data.playstationGames, 'Playstation');
+                        updateGameSection(data.nintendoGames, 'Nintendo');
+                    })
+                    .catch(error => console.error('Erro na requisição:', error));
+            });
+        });
+    </script>
 </body>
 </html>
