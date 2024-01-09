@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            margin: 2%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            margin-right: 20px;
+        }
+
+        .menu {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .menu li {
+            margin-right: 20px;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        #listasubmenu {
+            display: none;
+            position: absolute;
+            top: 30px;
+            background-color: #e61414;
+            padding: 10px;
+            margin-top: 3%;
+            margin-bottom: 3%;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+        }
+
+        .search input {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .games {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .category {
+            text-align: center;
+        }
+
+        .comments {
+            margin: 20px 0;
+        }
+
+        .comment {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #nintendogames, #xboxgames, #playstationgames {
+            height: 300px;
+            width: 250px;
+            margin: 2%;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            gap: 30%;
+        }
+
+        .exemplo img {
+            height: 150px;
+            width: 150px;
+            border-radius: 10%;
+            margin-top: 5%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Gameverse Store</div>
+            <ul class="menu">
+                <li><a href="loja.html">Home</a></li>
+                <li class="dropdown" onclick="mostrarsubmenu('listasubmenu')">
+                    <a href="#" >Categorias</a>
+                    <ul class="submenu" id="listasubmenu">
+                        <ul style="margin: 5%;">Xbox</a></ul>
+                        <ul style="margin: 5%;">Playstation</a></ul>
+                        <ul style="margin: 5%;">Nintendo</a></ul>
+                    </ul>
+                </li>
+                <li><a href="user.html">Usuário</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="text" placeholder="Pesquisar jogos...">
+            <button>Buscar</button>
+        </div>
+    </header>
+    
+    <section class="games">
+        <div class="category">
+            <h2>Nintendo</h2>
+            <div id="nintendogames"></div>
+        </div>
+
+        <div class="category">
+            <h2>Xbox</h2>
+            <div id="xboxgames"></div>
+        </div>
+
+        <div class="category">
+            <h2>Playstation</h2>
+            <div id="playstationgames"></div>
+        </div>
+    </section>
+
+    <section class="comments">
+        <h2>Comentários Gerais</h2>
+        <div class="comment">
+            <p>Comentário 1...</p>
+            <span>Usuário123</span>
+        </div>
+    </section>
+
+    <script>
+        function mostrarsubmenu(submenu) {
+            var submenuElement = document.getElementById(submenu);
+            if (submenuElement.style.display === 'block') {
+                submenuElement.style.display = 'none';
+            } else {
+                submenuElement.style.display = 'block';
+            }
+        }
+    
+        function mostrarJogos(categorias) {
+            const categoriasDivs = {
+                Nintendo: document.getElementById('nintendogames'),
+                Xbox: document.getElementById('xboxgames'),
+                Playstation: document.getElementById('playstationgames')
+            };
+    
+            Object.keys(categorias).forEach(categoria => {
+                const categoriaDiv = categoriasDivs[categoria];
+                const jogos = categorias[categoria];
+    
+                jogos.forEach(jogo => {
+                    const jogoDiv = document.createElement('div');
+                    jogoDiv.classList.add('exemplo');
+                    jogoDiv.innerHTML = `
+                        <p>${jogo.nomeprod}</p>
+                        <a href='${jogo.imagem}' target='_blank'>
+                            <img src='${jogo.imagem}' alt='${jogo.nomeprod}'/>
+                        </a>
+                        <p>${jogo.preco}</p>
+                    `;
+                    categoriaDiv.appendChild(jogoDiv);
+                });
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+    // Simulando a resposta do servidor (substitua isso pela lógica de requisição AJAX real)
+    const dadosDoServidor = {
+        Nintendo: [
+            { nomeprod: 'Kirby’s Dream Buffet', imagem: 'https://i.postimg.cc/Yv04V4cH/Kirby-s-Dream-Buffet.jpg', preco: '49.99', categoria_id: 1 },
+            { nomeprod: 'Terraria', imagem: 'https://i.postimg.cc/0zkMsqnd/Terraria.jpg', preco: '29.99', categoria_id: 1 },
+            { nomeprod: 'Mortal Kombat 1', imagem: 'https://i.postimg.cc/kDWBR5hv/Mortal-Kombat-1.jpg', preco: '19.99', categoria_id: 1 },
+            { nomeprod: 'Mario Wonder', imagem: 'https://i.postimg.cc/Z0LdncRL/Mario-Wonder.jpg', preco: '39.99', categoria_id: 1 },
+            { nomeprod: 'Apex Legends', imagem: 'https://i.postimg.cc/2qzpkrXG/Apex-Legends.jpg', preco: '29.90', categoria_id: 1 },
+            { nomeprod: 'Fall Guys', imagem: 'https://i.postimg.cc/bGYMXLsF/Fall-Guys.jpg', preco: '14.99', categoria_id: 1 },
+            { nomeprod: 'Rocket League', imagem: 'https://i.postimg.cc/Thbt4Bt3/Rocket-League.jpg', preco: '24.99', categoria_id: 1 },
+        ],
+        Xbox: [
+            { nomeprod: 'Minecraft', imagem: 'https://i.postimg.cc/68HspDJN/Minecraft.jpg', preco: '29.99', categoria_id: 1 },
+            { nomeprod: 'Assassins Creed', imagem: 'https://i.postimg.cc/pytP4MP0/Assassins-Creed.jpg', preco: '49.99', categoria_id: 1 },
+            { nomeprod: 'Forza Horizon 5', imagem: 'https://i.postimg.cc/B8KG7Mk9/Forza-Horizon.jpg', preco: '59.99', categoria_id: 1 },
+            { nomeprod: 'Overwatch 2', imagem: 'https://i.postimg.cc/kBY4kY1B/Overwatch.jpg', preco: '49.99', categoria_id: 1 },
+            { nomeprod: 'Lego Fortnite', imagem: 'https://i.postimg.cc/1fVh3WRg/Lego-Fortnite.jpg', preco: '39.99', categoria_id: 1 },
+            { nomeprod: 'Fifa 22', imagem: 'https://i.postimg.cc/KK0xMR64/Fifa-22.jpg', preco: '59.99', categoria_id: 1 },
+            { nomeprod: 'Star Wars Jedi: Fallen Order', imagem: 'https://i.postimg.cc/14tc62qz/Star-Wars-Jedi-Fallen-Order.jpg', preco: '44.99', categoria_id: 1 },
+        ],
+        Playstation: [
+            { nomeprod: 'The Last of Us Part II', imagem: 'https://i.postimg.cc/Cds5hx1B/The-Last-of-Us-Part-I.jpg', preco: '54.99', categoria_id: 1 },
+            { nomeprod: 'Ghost of Tsushima', imagem: 'https://i.postimg.cc/NKMk8nVD/Ghost-of-Tsushima.jpg', preco: '49.99', categoria_id: 1 },
+            { nomeprod: 'God of War', imagem: 'https://i.postimg.cc/Vd3XMNqf/God-of-War.jpg', preco: '39.99', categoria_id: 1 },
+            { nomeprod: 'Spider-Man: Miles Morales', imagem: 'https://i.postimg.cc/6TqHfyvn/Spider-Man-Miles-Morales.jpg', preco: '49.99', categoria_id: 1 },
+            { nomeprod: 'Resident Evil Village', imagem: 'https://i.postimg.cc/d7dk8M2z/Resident-Evil-Village.jpg', preco: '44.99', categoria_id: 1 },
+            { nomeprod: 'Deathloop', imagem: 'https://i.postimg.cc/QFfSRTvX/Deathloop.jpg', preco: '54.99', categoria_id: 1 },
+            { nomeprod: 'Gran Turismo 7', imagem: 'https://i.postimg.cc/mtJ6DM88/Gran-Turismo-7.jpg', preco: '59.99', categoria_id: 1 },
+        ]
+    };
+
+    // Chamando a função para exibir os jogos
+    mostrarJogos(dadosDoServidor);
+});
+
+    </script>
+</body>
+</html>

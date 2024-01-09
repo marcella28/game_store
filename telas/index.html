@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <style>
+
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom,#60bdc4, #9f74b1, #272652 );
+            transition: background 1s ease; /* Adiciona uma transição de 1 segundo */
+        }
+
+        #title {
+            display: flex;
+            text-align: center;
+            font-size: 45px;
+            justify-content: center;
+            transition: color 1s ease; /* Adiciona uma transição de 1 segundo para a cor do texto */
+        }
+
+        h1 {
+            color: #181717;
+        }
+
+        #content {
+            display: flex;
+            text-align: justify;
+            margin: 2%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: color 1s ease; /* Adiciona uma transição de 1 segundo para a cor do texto */
+        }
+
+        h2 {
+            color: #202020;
+            font-size: 28px;
+            margin-bottom: 4%;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            height: 100px;
+            width: 200px;
+            font-size: 20px;
+            transition: background 0.5s ease, color 0.5s ease; /* Adiciona uma transição de 0.5 segundos para a cor de fundo e texto do botão */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            align-items: center;
+            justify-content: ;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-container {
+            background-color: #fff;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content {
+            text-align: left;
+        }
+
+        .close-modal {
+            background-color: #272652;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #buttons{
+            display: flex;
+            flex-direction: row;
+            gap: 200px;
+            justify-content: center;
+         margin-top: 3%;
+         font-size: 23px;
+         font-family: Arial, sans-serif ;
+        }
+
+        #cadastro{
+            background-color: #b3a0c9;
+            color: #272652;
+        }
+
+        #login{
+            background-color: #b3a0c9;
+            color: #272652;
+        }
+
+        #principal{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding-bottom: 10%;
+padding-top: 5%;
+        }
+    </style>
+</head>
+<body>
+    <div id="principal">
+    <div id="title">
+        <h1>Gameverse Store</h1>
+    </div>
+    <div id="content">
+        <h2>Explore seu universo gamer na Gameverse Store: onde aventura e diversão se encontram!</h2>
+        <div id="buttons">
+        <button id="cadastro" onclick="openModalCad('cadastroModal')"><strong>Cadastro</strong> </button>
+        <button id="login" onclick="openModalLog('loginModal')"><strong>Login</strong></button>
+    </div>
+    </div>
+</div>
+
+    <!-- Modal para Cadastro -->
+    <div id="cadastroModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-content">
+                <h2>Cadastro</h2>
+                <form id="cadastroForm">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+                
+                    <button type="button" onclick="cadastrarUsuario()">Cadastrar</button>
+                </form>
+                <button class="close-modal" onclick="closeModalCad('cadastroModal')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-content">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required>
+    
+                    <label for="loginSenha">Senha:</label>
+                    <input type="password" id="loginSenha" name="loginSenha" required>
+    
+                    <button type="button" onclick="fazerLogin()">Entrar</button>
+                </form>
+                <button class="close-modal" onclick="closeModalLog('loginModal')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModalCad(cadastroModal) {
+        document.getElementById(cadastroModal).style.display = 'block';
+    }
+
+    function closeModalCad(cadastroModal) {
+        document.getElementById(cadastroModal).style.display = 'none';
+    }
+
+    function openModalLog(loginModal) {
+        document.getElementById(loginModal).style.display = 'block';
+    }
+
+    function closeModalLog(loginModal) {
+        document.getElementById(loginModal).style.display = 'none';
+    }
+
+    function cadastrarUsuario() {
+        const nome = document.getElementById('nome').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+
+        // Realizar a requisição AJAX para cadastrar o usuário no servidor
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/cadastrar-usuario', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    alert('Usuário cadastrado com sucesso!');
+                    closeModalCad('cadastroModal');
+                } else {
+                    alert('Erro ao cadastrar usuário. Tente novamente.');
+                }
+            }
+        };
+
+        const dadosUsuario = {
+            nome: nome,
+            email: email,
+            senha: senha
+        };
+
+        xhr.send(JSON.stringify(dadosUsuario));
+    }
+
+
+    function fazerLogin() {
+    const loginEmail = document.getElementById('loginEmail').value;
+    const loginSenha = document.getElementById('loginSenha').value;
+
+    // Realizar a requisição AJAX para verificar as credenciais no servidor
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/login', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Login bem-sucedido
+                alert('Login bem-sucedido!');
+                closeModalLog('loginModal');
+                // Redirecionar para a página de loja.html ou outra página desejada
+                window.location.href = '/loja.html';
+            } else {
+                // Credenciais incorretas
+                alert('Credenciais incorretas. Tente novamente.');
+            }
+        }
+    };
+
+    const dadosLogin = {
+        email: loginEmail,
+        senha: loginSenha
+    };
+
+    xhr.send(JSON.stringify(dadosLogin));
+}
+
+function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Verifique se o parâmetro showLogin está presente
+    const showLoginParam = getParameterByName('showLogin');
+    if (showLoginParam === 'true') {
+        // Abra o modal de login
+        openModalLog('loginModal');
+    }
+        
+    </script>
+</body>
+</html>
