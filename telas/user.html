@@ -65,6 +65,10 @@
         .container {
             margin: 2%;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         h2 {
@@ -99,6 +103,14 @@
             border: none;
             cursor: pointer;
         }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
     </style>
 </head>
 <body>
@@ -121,28 +133,49 @@
         </nav>
     </header>
 
+    
+    
     <div class="container">
-        <h2>Olá, nomedouser!</h2>
-        <h3>Minhas informações</h3>
+        
+       
+        <h3>Aqui estão suas informações,   <span id="nome-usuario-user"></span>!</h3>
 
-        <form id="editUserInfoForm">
-            <label for="editNome">Nome:</label>
-            <input type="text" id="editNome" name="editNome" value="Nome do usuário" required>
-
-            <label for="editEmail">Email:</label>
-            <input type="email" id="editEmail" name="editEmail" value="email@example.com" required>
-
-            <label for="editSenha">Nova Senha:</label>
-            <input type="password" id="editSenha" name="editSenha" placeholder="Digite nova senha">
-
-            <button type="button" onclick="editarInformacoes()">Salvar Alterações</button>
-        </form>
+        <div id="userInfoContainer">
+            <!-- As informações do usuário serão exibidas aqui -->
+            <!-- ... -->
+        </div>
     </div>
 
     <script>
-        function editarInformacoes() {
-            // Adicione a lógica para enviar os dados atualizados para o servidor e atualizar no banco de dados
-            alert('Implemente a lógica de edição no servidor e no banco de dados.');
+        document.addEventListener('DOMContentLoaded', () => {
+            // ...
+
+            // Adicione esta parte para obter informações do usuário na página user.html
+            fetch('/obter-informacoes-usuario')
+                .then(response => response.json())
+                .then(data => {
+                    const nomeUsuarioElement = document.getElementById('nome-usuario-user');
+                    if (nomeUsuarioElement) {
+                        nomeUsuarioElement.textContent = data.nome || 'Convidado';
+                    }
+                    // Chamar a função para obter as informações do usuário após carregar a página
+                    obterInformacoesUsuario(data.nome, data.email, data.senha);
+                })
+                .catch(error => console.error('Erro ao obter informações do usuário:', error));
+        });
+
+        // Função para obter informações do usuário a partir dos parâmetros de consulta
+        function obterInformacoesUsuario(nomeUsuario, emailUsuario, senhaUsuario) {
+            // Preencher os campos com as informações obtidas
+            document.getElementById('nome-usuario-user').innerText = nomeUsuario;
+
+            // Criar elementos para exibir as informações (pode ajustar conforme necessário)
+            const userInfoContainer = document.getElementById('userInfoContainer');
+            userInfoContainer.innerHTML = `
+                <p><strong>Nome:</strong> ${nomeUsuario}</p>
+                <p><strong>Email:</strong> ${emailUsuario}</p>
+                <p><strong>Senha:</strong> ${senhaUsuario}</p>
+            `;
         }
     </script>
 </body>

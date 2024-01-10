@@ -56,6 +56,7 @@
             font-size: 20px;
             transition: background 0.5s ease, color 0.5s ease; /* Adiciona uma transição de 0.5 segundos para a cor de fundo e texto do botão */
         }
+        
 
         /* Modal styles */
         .modal {
@@ -239,10 +240,18 @@ padding-top: 5%;
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Login bem-sucedido
-                alert('Login bem-sucedido!');
+                const resposta = JSON.parse(xhr.responseText);
+
+                // Extraindo informações do usuário
+                const nomeUsuario = resposta.nome;
+
+                // Exibindo uma mensagem de boas-vindas
+                alert(`Olá, ${nomeUsuario}! Login bem-sucedido!`);
+
                 closeModalLog('loginModal');
+
                 // Redirecionar para a página de loja.html ou outra página desejada
-                window.location.href = '/loja.html';
+                window.location.href = 'telas/loja.html';
             } else {
                 // Credenciais incorretas
                 alert('Credenciais incorretas. Tente novamente.');

@@ -1,9 +1,10 @@
 const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
+const session = require('express-session');
+
 const app = express();
 
-// Configurações do servidor e banco de dados
 const config = {
     server: {
         port: 3000
@@ -20,7 +21,8 @@ const port = config.server.port;
 const publicDirectoryPath = path.join(__dirname, 'game_store');
 const connection = mysql.createConnection(config.database);
 
-app.use(express.json()); // Adicione isso para facilitar o uso de JSON no corpo da requisição
+app.use(session({ secret: 'seuSegredoAqui', resave: true, saveUninitialized: true }));
+app.use(express.json());
 
 connection.connect(err => {
     if (err) {
@@ -30,10 +32,9 @@ connection.connect(err => {
     console.log('Conectado ao banco de dados');
 });
 
-app.use(express.static(publicDirectoryPath));
+app.use('/telas', express.static(path.join(__dirname, 'telas')));
 
 app.get('/', (req, res) => {
-    // Consulta para obter os dados dos jogos
     const query = `
         SELECT nomeprod, img, preco, categoria_id
         FROM produtos
@@ -46,15 +47,13 @@ app.get('/', (req, res) => {
             return;
         }
 
-        // Mapear os resultados da consulta para um formato desejado
         const jogos = results.map(jogo => ({
-            nome: jogo.nomeprod,  // Corrigindo a propriedade 'nomeprod'
+            nome: jogo.nomeprod,
             imagem: jogo.img,
             preco: jogo.preco,
             categoria_id: jogo.categoria_id
         }));
 
-        // Organizar os jogos por categoria
         const categorias = {
             Nintendo: [],
             Xbox: [],
@@ -72,20 +71,14 @@ app.get('/', (req, res) => {
                 case 3:
                     categorias.Playstation.push(jogo);
                     break;
-                // Adicione mais casos conforme necessário
             }
         });
 
         console.log('Categorias organizadas:', categorias);
 
-        // Renderizar a página HTML e enviar os dados para o cliente
         res.sendFile(path.join(__dirname, 'telas', 'index.html'), { categorias });
-
-
     });
 });
-
-
 
 app.post('/cadastrar-usuario', (req, res) => {
     const { nome, email, senha } = req.body;
@@ -106,31 +99,9 @@ app.post('/cadastrar-usuario', (req, res) => {
     });
 });
 
-
-app.get('/user', (req, res) => {
-    // Certifique-se de implementar a autenticação antes de prosseguir
-    // Você pode verificar se o usuário está autenticado antes de renderizar a página do usuário
-    // Exemplo:
-    if (!req.isAuthenticated()) {
-        // Redirecionar para a página de login se o usuário não estiver autenticado
-        res.redirect('/login');
-        return;
-    }
-
-    // Renderizar a página do usuário (user.html) e passar as informações do usuário para a página
-    res.sendFile(path.join(__dirname, 'telas', 'user.html'), { user: req.user });
-});
-
-app.get('/login', (req, res) => {
-    // Você pode adicionar lógica adicional aqui, se necessário
-    res.sendFile(path.join(__dirname, 'telas', 'index.html?showLogin=true'), { categorias });
-});
-
-// Adicione a rota para o processo de login
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
 
-    // Verificar as credenciais do usuário no banco de dados
     const query = `
         SELECT *
         FROM users
@@ -139,33 +110,133 @@ app.post('/login', (req, res) => {
 
     connection.query(query, [email, senha], (error, results) => {
         if (error) {
-            console.error('Erro ao verificar as credenciais do usuário:', error);
-            return res.status(500).send('Erro interno do servidor');
+            console.error('Erro ao verificar credenciais:', error);
+            res.status(500).send('Erro interno do servidor');
+            return;
         }
 
-        console.log('Results:', results);
-
         if (results.length > 0) {
-            // Credenciais corretas, o usuário está autenticado
-            console.log('Credenciais corretas. Usuário autenticado:', results[0]);
-
-            // Armazenar informações do usuário na sessão (usando passport, se estiver usando)
-            req.login(results[0], (err) => {
-                if (err) {
-                    console.error('Erro ao realizar login:', err);
-                    return res.status(500).send('Erro interno do servidor');
-                }
-
-                console.log('Login bem-sucedido. Redirecionando para /user');
-                return res.redirect('/user'); // Redirecionar para a página do usuário após o login bem-sucedido
+            const usuario = results[0];
+            req.session.userId = usuario.idusers;
+        
+            res.status(200).json({
+                mensagem: 'Login bem-sucedido!',
+                nome: usuario.nomeuser,
+                userId: usuario.idusers, // Inclua o ID do usuário na resposta
             });
         } else {
-            // Credenciais incorretas, redirecionar para a página de login
-            console.log('Credenciais incorretas. Redirecionando para /login');
-            return res.sendFile(path.join(__dirname, 'telas', 'index.html?showLogin=true'), { categorias });
+            res.status(401).send('Credenciais incorretas. Tente novamente.');
         }
     });
 });
+
+app.get('/obter-informacoes-usuario', (req, res) => {
+    const userId = req.session.userId;
+
+    if (userId) {
+        const query = `
+            SELECT nomeuser, email, senha
+            FROM users
+            WHERE idusers = ?;
+        `;
+
+        connection.query(query, [userId], (error, results) => {
+            if (error) {
+                console.error('Erro ao obter informações do usuário:', error);
+                res.status(500).json({ error: 'Erro interno do servidor' });
+                return;
+            }
+
+            if (results.length > 0) {
+                const usuario = results[0];
+                res.json({
+                    nome: usuario.nomeuser,
+                    email: usuario.email,
+                    senha: usuario.senha,
+                });
+            } else {
+                res.status(404).send('Usuário não encontrado');
+            }
+        });
+    } else {
+        res.status(401).send('Usuário não autenticado');
+    }
+});
+
+app.post('/editar-informacoes-usuario', (req, res) => {
+    const { nome, email, senha } = req.body;
+    const userId = req.session.userId;
+
+    const query = `
+        UPDATE users
+        SET nomeuser = ?, email = ?, senha = ?
+        WHERE idusers = ?;
+    `;
+
+    connection.query(query, [nome, email, senha, userId], (error, results) => {
+        if (error) {
+            console.error('Erro ao editar informações do usuário:', error);
+            res.status(500).send('Erro interno do servidor');
+            return;
+        }
+
+        res.status(200).send('Informações do usuário atualizadas com sucesso!');
+    });
+});
+
+
+app.post('/adicionar-ao-carrinho', (req, res) => {
+    const userId = req.session.userId; // Obtenha o ID do usuário diretamente da sessão
+    const { productId } = req.body;
+
+    const query = `
+        INSERT INTO carrinho (idusers, idproduto)
+        VALUES (?, ?);
+    `;
+
+    connection.query(query, [userId, productId], (error, results) => {
+        if (error) {
+            console.error('Erro ao adicionar ao carrinho:', error);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+            return;
+        }
+
+        res.status(200).json({ mensagem: 'Produto adicionado ao carrinho com sucesso!' });
+    });
+});
+
+app.get('/obter-carrinho', (req, res) => {
+    const userId = req.query.id;
+
+    if (!userId) {
+        res.status(401).send('Usuário não autenticado');
+        return;
+    }
+
+    const query = `
+        SELECT p.nomeprod, p.preco, c.quantidade
+        FROM carrinho c
+        JOIN produtos p ON c.idproduto = p.idproduto
+        WHERE c.idusers = ?;
+    `;
+
+    connection.query(query, [userId], (error, results) => {
+        if (error) {
+            console.error('Erro ao obter itens do carrinho:', error);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+            return;
+        }
+
+        const itensCarrinho = results.map(item => ({
+            nomeprod: item.nomeprod,
+            preco: item.preco,
+            quantidade: item.quantidade,
+        }));
+
+        res.json(itensCarrinho);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 });

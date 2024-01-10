@@ -72,15 +72,7 @@
             color: #272652;
         }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
+        
         ul {
             list-style-type: none;
             padding: 0;
@@ -112,32 +104,87 @@
     </header>
 
     <section>
-        <h2>Carrinho de compras:</h2>
+        <h2>Carrinho de compras de <span id="nome-usuario-cart"></span></h2>
 
-        <div>Aqui aparecerão os itens adicionados ao carrinho</div>
-
-        <button onclick="revisarCompra()">Revisar Compra</button>
-        <button onclick="concluirCompra()">Concluir Compra</button>
-
-        <!-- Lista de itens no carrinho (inicialmente oculta) -->
-        <ul id="listaCarrinho" style="display: none;">
-            <li><input type="checkbox"> Item 1</li>
-            <li><input type="checkbox"> Item 2</li>
-            <li><input type="checkbox"> Item 3</li>
-            <!-- Adicione dinamicamente os itens do carrinho aqui -->
-        </ul>
+        <div id="carrinho-container">
+            <!-- Aqui aparecerão os itens adicionados ao carrinho -->
+        </div>
     </section>
 
     <script>
-        function revisarCompra() {
-            // Exibe a lista de itens no carrinho quando o botão é clicado
-            document.getElementById('listaCarrinho').style.display = 'block';
+        // Função para obter o nome do usuário e exibi-lo no carrinho
+        function obterNomeUsuario() {
+            fetch('/obter-informacoes-usuario')
+                .then(response => response.json())
+                .then(data => {
+                    const nomeUsuarioElement = document.getElementById('nome-usuario-cart');
+                    if (nomeUsuarioElement) {
+                        nomeUsuarioElement.textContent = data.nome || 'Convidado';
+                    }
+                })
+                .catch(error => console.error('Erro ao obter informações do usuário:', error));
         }
 
-        function concluirCompra() {
-            // Adicione a lógica para concluir a compra (por exemplo, enviar a lista marcada para o servidor)
-            alert('Implemente a lógica para concluir a compra.');
-        }
+        function adicionarAoCarrinho(idProduto) {
+    // Remova a chamada para obterIdUsuario()
+
+    fetch('/adicionar-ao-carrinho', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId: idProduto }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Resposta do servidor:', data);
+
+        // Adicione aqui a lógica para dar feedback ao usuário
+        alert(data.mensagem);  // Exemplo: exibe um alerta com a mensagem do servidor
+    })
+    .catch(error => {
+        console.error('Erro ao adicionar ao carrinho:', error);
+        // Adicione aqui a lógica para dar feedback ao usuário em caso de erro
+    });
+}
+    // Chamadas para as funções de inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        obterNomeUsuario();
+        obterItensCarrinho();
+    });
+
+    function obterItensCarrinho() {
+    fetch('/obter-carrinho')
+        .then(response => response.json())
+        .then(itensCarrinho => {
+            const carrinhoContainer = document.getElementById('carrinho-container');
+
+            if (carrinhoContainer) {
+                carrinhoContainer.innerHTML = ''; // Limpa o conteúdo anterior do carrinho
+
+                if (itensCarrinho.length === 0) {
+                    carrinhoContainer.innerHTML = '<p>Carrinho vazio</p>';
+                } else {
+                    const listaItens = document.createElement('ul');
+
+                    itensCarrinho.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${item.nomeprod} - Preço: ${item.preco} - Quantidade: ${item.quantidade}`;
+                        listaItens.appendChild(listItem);
+                    });
+
+                    carrinhoContainer.appendChild(listaItens);
+                }
+            }
+        })
+        .catch(error => console.error('Erro ao obter itens do carrinho:', error));
+}
+
+// Chamadas para as funções de inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    obterNomeUsuario();
+    obterItensCarrinho();
+});
     </script>
 </body>
 </html>
