@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Conta</title>
+    <title>Carrinho de Compras</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,34 +62,14 @@
             margin-bottom: 3%;
         }
 
-        .container {
+        section {
             margin: 2%;
             padding: 20px;
         }
 
         h2 {
-            margin-top: 20px;
+            margin-bottom: 20px;
             color: #272652;
-        }
-
-        h3 {
-            color: #272652;
-        }
-
-        form {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-bottom: 5px;
-        }
-
-        input {
-            padding: 8px;
-            margin-bottom: 10px;
-            width: 100%;
         }
 
         button {
@@ -98,6 +78,16 @@
             padding: 10px;
             border: none;
             cursor: pointer;
+            margin-top: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -121,28 +111,32 @@
         </nav>
     </header>
 
-    <div class="container">
-        <h2>Olá, nomedouser!</h2>
-        <h3>Minhas informações</h3>
+    <section>
+        <h2>Carrinho de compras:</h2>
 
-        <form id="editUserInfoForm">
-            <label for="editNome">Nome:</label>
-            <input type="text" id="editNome" name="editNome" value="Nome do usuário" required>
+        <div>Aqui aparecerão os itens adicionados ao carrinho</div>
 
-            <label for="editEmail">Email:</label>
-            <input type="email" id="editEmail" name="editEmail" value="email@example.com" required>
+        <button onclick="revisarCompra()">Revisar Compra</button>
+        <button onclick="concluirCompra()">Concluir Compra</button>
 
-            <label for="editSenha">Nova Senha:</label>
-            <input type="password" id="editSenha" name="editSenha" placeholder="Digite nova senha">
-
-            <button type="button" onclick="editarInformacoes()">Salvar Alterações</button>
-        </form>
-    </div>
+        <!-- Lista de itens no carrinho (inicialmente oculta) -->
+        <ul id="listaCarrinho" style="display: none;">
+            <li><input type="checkbox"> Item 1</li>
+            <li><input type="checkbox"> Item 2</li>
+            <li><input type="checkbox"> Item 3</li>
+            <!-- Adicione dinamicamente os itens do carrinho aqui -->
+        </ul>
+    </section>
 
     <script>
-        function editarInformacoes() {
-            // Adicione a lógica para enviar os dados atualizados para o servidor e atualizar no banco de dados
-            alert('Implemente a lógica de edição no servidor e no banco de dados.');
+        function revisarCompra() {
+            // Exibe a lista de itens no carrinho quando o botão é clicado
+            document.getElementById('listaCarrinho').style.display = 'block';
+        }
+
+        function concluirCompra() {
+            // Adicione a lógica para concluir a compra (por exemplo, enviar a lista marcada para o servidor)
+            alert('Implemente a lógica para concluir a compra.');
         }
     </script>
 </body>

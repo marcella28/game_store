@@ -9,6 +9,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #e1dbe4;
+            
         }
 
         header {
@@ -16,8 +18,11 @@
             color: #fff;
             padding: 10px;
             display: flex;
+            width:  100%;
             justify-content: space-between;
             align-items: center;
+            background: linear-gradient(to bottom,#c8a4d8, #9d66b4, #54527a );
+            transition: background 0.5s ease; /* Adiciona uma transição de 1 segundo */
         }
 
         nav {
@@ -74,11 +79,36 @@
             flex-direction: column;
             justify-content: space-around;
             margin: 20px 0;
+           
         }
 
         .category {
             text-align: center;
+            margin-top: 5%;
+            
         }
+
+
+        .rolar {
+    overflow-x: scroll; /* Alterado para scroll */
+    
+    white-space: nowrap; /* Impede que os elementos quebrem para a próxima linha */
+    margin: 10px;
+}
+
+/* Adicionando um estilo personalizado à barra de rolagem horizontal (opcional) */
+.rolar::-webkit-scrollbar {
+    height: 12px;
+}
+
+.rolar::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+.rolar::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
 
         .comments {
             margin: 20px 0;
@@ -91,13 +121,15 @@
         }
 
         #nintendogames, #xboxgames, #playstationgames {
-            height: 300px;
-            width: 250px;
+            height: 310px;
+            width: 320px;
             margin: 2%;
             text-align: center;
             display: flex;
             flex-direction: row;
             gap: 30%;
+            
+
         }
 
         .exemplo img {
@@ -106,6 +138,42 @@
             border-radius: 10%;
             margin-top: 5%;
         }
+
+
+        
+/* Adicionando estilos para as divs dos jogos Nintendo */
+.nintendo-games .exemplo {
+    background-color: #f2eff3; /* Cor de fundo branca */
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Adicionando estilos para as divs dos jogos Xbox */
+.xbox-games .exemplo {
+    background-color: #f2eff3; /* Cor de fundo branca */
+
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Adicionando estilos para as divs dos jogos Playstation */
+.playstation-games .exemplo {
+    background-color: #f2eff3; /* Cor de fundo branca */
+
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+
+h2{
+    font-size: 30px;
+}
     </style>
 </head>
 <body>
@@ -123,6 +191,7 @@
                     </ul>
                 </li>
                 <li><a href="user.html">Usuário</a></li>
+                <li><a href="cart.html">Carrinho</a></li>
             </ul>
         </nav>
         <div class="search">
@@ -132,19 +201,25 @@
     </header>
     
     <section class="games">
-        <div class="category">
+        <div class="category nintendo-games">
             <h2>Nintendo</h2>
+            <div class="rolar">
             <div id="nintendogames"></div>
         </div>
-
-        <div class="category">
-            <h2>Xbox</h2>
-            <div id="xboxgames"></div>
         </div>
 
-        <div class="category">
+        <div class="category xbox-games">
+            <h2>Xbox</h2>
+            <div class="rolar">
+            <div id="xboxgames"></div>
+        </div>
+        </div>
+
+        <div class="category playstation-games">
             <h2>Playstation</h2>
+            <div class="rolar">
             <div id="playstationgames"></div>
+            </div>
         </div>
     </section>
 
