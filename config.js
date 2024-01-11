@@ -36,7 +36,7 @@ app.use('/telas', express.static(path.join(__dirname, 'telas')));
 
 app.get('/', (req, res) => {
     const query = `
-        SELECT nomeprod, img, preco, categoria_id
+        SELECT idproduto, nomeprod, img, preco, categoria_id
         FROM produtos
     `;
 
@@ -48,6 +48,7 @@ app.get('/', (req, res) => {
         }
 
         const jogos = results.map(jogo => ({
+            id: jogo.produto_id,
             nome: jogo.nomeprod,
             imagem: jogo.img,
             preco: jogo.preco,
@@ -186,56 +187,132 @@ app.post('/editar-informacoes-usuario', (req, res) => {
 
 
 app.post('/adicionar-ao-carrinho', (req, res) => {
-    const userId = req.session.userId; // Obtenha o ID do usuário diretamente da sessão
-    const { productId } = req.body;
+    const userId = req.session.userId;
+    const { productId, quantidade } = req.body;
+
+    console.log('Rota /adicionar-ao-carrinho chamada');
+    console.log('Usuário ID:', userId, 'Produto ID recebido:', productId, 'Quantidade:', quantidade);
 
     const query = `
-        INSERT INTO carrinho (idusers, idproduto)
-        VALUES (?, ?);
+        INSERT INTO carrinho (idusers, idproduto, quantidade)
+        VALUES (?, ?, ?);
     `;
 
-    connection.query(query, [userId, productId], (error, results) => {
+    connection.query(query, [userId, productId, quantidade], (error, results) => {
         if (error) {
             console.error('Erro ao adicionar ao carrinho:', error);
-            res.status(500).json({ error: 'Erro interno do servidor' });
+            res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
             return;
         }
 
+        console.log('Produto adicionado ao carrinho com sucesso!');
         res.status(200).json({ mensagem: 'Produto adicionado ao carrinho com sucesso!' });
     });
 });
 
-app.get('/obter-carrinho', (req, res) => {
-    const userId = req.query.id;
 
-    if (!userId) {
+app.get('/obter-itens-carrinho', (req, res) => {
+    const userId = req.session.userId;
+
+    if (userId) {
+        const query = `
+            SELECT p.idproduto, p.nomeprod, p.preco, c.quantidade
+            FROM carrinho c
+            INNER JOIN produtos p ON c.idproduto = p.idproduto
+            WHERE c.idusers = ?;
+        `;
+
+        connection.query(query, [userId], (error, results) => {
+            if (error) {
+                console.error('Erro ao obter itens do carrinho:', error);
+                res.status(500).json({ error: 'Erro interno do servidor' });
+                return;
+            }
+
+            const itensCarrinho = results.map(item => ({
+                idProduto: item.idproduto,
+                nomeProduto: item.nomeprod,
+                preco: item.preco,
+                quantidade: item.quantidade
+            }));
+
+            res.json(itensCarrinho);
+        });
+    } else {
         res.status(401).send('Usuário não autenticado');
-        return;
     }
+});
+
+
+app.delete('/excluir-item-carrinho/:idProduto', (req, res) => {
+    const userId = req.session.userId;
+    const idProduto = req.params.idProduto;
 
     const query = `
-        SELECT p.nomeprod, p.preco, c.quantidade
-        FROM carrinho c
-        JOIN produtos p ON c.idproduto = p.idproduto
-        WHERE c.idusers = ?;
+        DELETE FROM carrinho
+        WHERE idusers = ? AND idproduto = ?;
     `;
 
-    connection.query(query, [userId], (error, results) => {
+    connection.query(query, [userId, idProduto], (error, results) => {
         if (error) {
-            console.error('Erro ao obter itens do carrinho:', error);
-            res.status(500).json({ error: 'Erro interno do servidor' });
+            console.error('Erro ao excluir item do carrinho:', error);
+            res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
             return;
         }
 
-        const itensCarrinho = results.map(item => ({
-            nomeprod: item.nomeprod,
-            preco: item.preco,
-            quantidade: item.quantidade,
-        }));
-
-        res.json(itensCarrinho);
+        console.log('Item do carrinho excluído com sucesso!');
+        res.status(200).json({ mensagem: 'Item do carrinho excluído com sucesso!' });
     });
 });
+
+
+app.put('/editar-item-carrinho/:idProduto', (req, res) => {
+    const userId = req.session.userId;
+    const idProduto = req.params.idProduto;
+    const { novaQuantidade } = req.body;
+
+    const query = `
+        UPDATE carrinho
+        SET quantidade = ?
+        WHERE idusers = ? AND idproduto = ?;
+    `;
+
+    connection.query(query, [novaQuantidade, userId, idProduto], (error, results) => {
+        if (error) {
+            console.error('Erro ao editar quantidade do item do carrinho:', error);
+            res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
+            return;
+        }
+
+        console.log('Quantidade do item do carrinho editada com sucesso!');
+        res.status(200).json({ mensagem: 'Quantidade do item do carrinho editada com sucesso!' });
+    });
+});
+
+app.post('/confirmar-compra', (req, res) => {
+    const userId = req.session.userId;
+
+    if (userId) {
+        const query = `
+            DELETE FROM carrinho
+            WHERE idusers = ?;
+        `;
+
+        connection.query(query, [userId], (error, results) => {
+            if (error) {
+                console.error('Erro ao confirmar compra e excluir itens do carrinho:', error);
+                res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
+                return;
+            }
+
+            console.log('Compra confirmada e itens do carrinho excluídos com sucesso!');
+            res.status(200).json({ mensagem: 'Compra confirmada e itens do carrinho excluídos com sucesso!' });
+        });
+    } else {
+        res.status(401).send('Usuário não autenticado');
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);

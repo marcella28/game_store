@@ -109,75 +109,176 @@
         <div id="carrinho-container">
             <!-- Aqui aparecerão os itens adicionados ao carrinho -->
         </div>
+
+        <!-- Adicione este novo elemento para mostrar o Valor Total Geral -->
+        <div id="valor-total-geral"></div>
+
+        <button onclick="confirmarCompra()" id="confirmar-compra-btn">Confirmar Compra</button>
     </section>
+
+    <section>
+        <h2>Histórico de Compras</h2>
+    
+        <div id="historico-compras-container">
+            <!-- Aqui aparecerão as informações do histórico de compras -->
+        </div>
+    </section>  
 
     <script>
         // Função para obter o nome do usuário e exibi-lo no carrinho
         function obterNomeUsuario() {
-            fetch('/obter-informacoes-usuario')
-                .then(response => response.json())
-                .then(data => {
-                    const nomeUsuarioElement = document.getElementById('nome-usuario-cart');
-                    if (nomeUsuarioElement) {
-                        nomeUsuarioElement.textContent = data.nome || 'Convidado';
-                    }
-                })
-                .catch(error => console.error('Erro ao obter informações do usuário:', error));
-        }
-
-        function adicionarAoCarrinho(idProduto) {
-    // Remova a chamada para obterIdUsuario()
-
-    fetch('/adicionar-ao-carrinho', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productId: idProduto }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Resposta do servidor:', data);
-
-        // Adicione aqui a lógica para dar feedback ao usuário
-        alert(data.mensagem);  // Exemplo: exibe um alerta com a mensagem do servidor
-    })
-    .catch(error => {
-        console.error('Erro ao adicionar ao carrinho:', error);
-        // Adicione aqui a lógica para dar feedback ao usuário em caso de erro
-    });
+    fetch('/obter-informacoes-usuario')
+        .then(response => response.json())
+        .then(data => {
+            const nomeUsuarioElement = document.getElementById('nome-usuario-cart');
+            if (nomeUsuarioElement) {
+                nomeUsuarioElement.textContent = data.nome || 'Convidado';
+            }
+        })
+        .catch(error => console.error('Erro ao obter informações do usuário:', error));
 }
-    // Chamadas para as funções de inicialização
-    document.addEventListener('DOMContentLoaded', () => {
-        obterNomeUsuario();
-        obterItensCarrinho();
-    });
 
-    function obterItensCarrinho() {
-    fetch('/obter-carrinho')
+function formatarValorParaReal(valor) {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+// Função para obter os itens do carrinho e exibi-los
+function obterItensCarrinho() {
+    fetch('/obter-itens-carrinho')
         .then(response => response.json())
         .then(itensCarrinho => {
             const carrinhoContainer = document.getElementById('carrinho-container');
+            const totalContainer = document.getElementById('valor-total');
+            const confirmarCompraBtn = document.getElementById('confirmar-compra-btn');
 
-            if (carrinhoContainer) {
-                carrinhoContainer.innerHTML = ''; // Limpa o conteúdo anterior do carrinho
-
-                if (itensCarrinho.length === 0) {
-                    carrinhoContainer.innerHTML = '<p>Carrinho vazio</p>';
-                } else {
-                    const listaItens = document.createElement('ul');
-
-                    itensCarrinho.forEach(item => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${item.nomeprod} - Preço: ${item.preco} - Quantidade: ${item.quantidade}`;
-                        listaItens.appendChild(listItem);
-                    });
-
-                    carrinhoContainer.appendChild(listaItens);
-                }
+            // Se o carrinho estiver vazio, exiba uma mensagem
+            if (itensCarrinho.length === 0) {
+                carrinhoContainer.innerHTML = '<p>O carrinho está vazio.</p>';
+                totalContainer.style.display = 'none';
+                confirmarCompraBtn.style.display = 'none';
+                return;
             }
+
+            // Limpe o conteúdo atual do carrinho
+            carrinhoContainer.innerHTML = '';
+            
+            let valorTotal = 0;
+
+            // Adicione os itens do carrinho ao HTML
+            itensCarrinho.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `
+                    <p>${item.nomeProduto}</p>
+                    <p>Quantidade: ${item.quantidade}</p>
+                    <p>Preço unitário: ${item.preco}</p>
+                    <p>Valor total: ${item.preco * item.quantidade}</p>
+                    <button onclick="excluirItemCarrinho(${item.idProduto})">Excluir</button>
+                    <hr>
+                `;
+                carrinhoContainer.appendChild(itemDiv);
+
+                // Atualize o valor total
+                valorTotal += item.preco * item.quantidade;
+            });
+
+            // Exiba o valor total
+            totalContainer.innerHTML = `<p>Valor Total: R$ ${valorTotal.toFixed(2).replace('.', ',')}</p>`;
+            totalContainer.style.display = 'block';
+            confirmarCompraBtn.style.display = 'block';
         })
         .catch(error => console.error('Erro ao obter itens do carrinho:', error));
+}
+
+
+function excluirItemCarrinho(idProduto) {
+    // Faça uma requisição ao servidor para excluir o item do carrinho
+    fetch(`/excluir-item-carrinho/${idProduto}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Resposta do servidor ao excluir item:', data);
+
+        // Atualize a exibição do carrinho após a exclusão
+        obterItensCarrinho();
+    })
+    .catch(error => {
+        console.error('Erro ao excluir item do carrinho:', error);
+        // Adicione lógica para feedback de erro se necessário
+    });
+}
+
+
+function editarItemCarrinho(idProduto, quantidadeAtual) {
+    const novaQuantidade = prompt('Digite a nova quantidade:', quantidadeAtual);
+
+    if (novaQuantidade !== null && !isNaN(novaQuantidade) && novaQuantidade >= 0) {
+        // Faça uma requisição ao servidor para editar a quantidade do item no carrinho
+        fetch(`/editar-item-carrinho/${idProduto}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ novaQuantidade }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Resposta do servidor ao editar item:', data);
+
+            // Atualize a exibição do carrinho após a edição
+            obterItensCarrinho();
+        })
+        .catch(error => {
+            console.error('Erro ao editar item do carrinho:', error);
+            // Adicione lógica para feedback de erro se necessário
+        });
+    } else {
+        alert('Quantidade inválida. Tente novamente.');
+    }
+}
+
+function confirmarCompra() {
+    fetch('/confirmar-compra', {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Resposta do servidor ao confirmar compra:', data);
+
+        // Adicione aqui a lógica para dar feedback ao usuário
+        alert(data.mensagem);  // Exemplo: exibe um alerta com a mensagem do servidor
+
+        // Atualize a exibição do carrinho e do histórico de compras após a confirmação
+        obterItensCarrinho();
+        obterHistoricoCompras();
+    })
+    .catch(error => {
+        console.error('Erro ao confirmar compra:', error);
+        // Adicione aqui a lógica para dar feedback ao usuário em caso de erro
+    });
+}
+
+function obterHistoricoCompras() {
+    fetch('/obter-historico-compras')
+        .then(response => response.json())
+        .then(historicoCompras => {
+            const historicoComprasContainer = document.getElementById('historico-compras-container');
+
+            // Limpe o conteúdo atual do histórico de compras
+            historicoComprasContainer.innerHTML = '';
+
+            // Adicione as informações do histórico de compras ao HTML
+            historicoCompras.forEach(compra => {
+                const compraDiv = document.createElement('div');
+                compraDiv.innerHTML = `
+                    <p>Compra em ${compra.dataCompra}</p>
+                    <p>Valor Total: ${formatarValorParaReal(compra.valorTotal)}</p>
+                    <hr>
+                `;
+                historicoComprasContainer.appendChild(compraDiv);
+            });
+        })
+        .catch(error => console.error('Erro ao obter histórico de compras:', error));
 }
 
 // Chamadas para as funções de inicialização
@@ -185,6 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
     obterNomeUsuario();
     obterItensCarrinho();
 });
-    </script>
+</script>
 </body>
 </html>

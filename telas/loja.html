@@ -282,18 +282,21 @@ function mostrarJogos(categorias) {
         const jogos = categorias[categoria];
 
         jogos.forEach(jogo => {
+    console.log('ID do jogo:', jogo.idproduto);
             const jogoDiv = document.createElement('div');
             jogoDiv.classList.add('exemplo');
             jogoDiv.innerHTML = `
-                <p>${jogo.nomeprod}</p>
-                <a href='${jogo.imagem}' target='_blank'>
-                    <img src='${jogo.imagem}' alt='${jogo.nomeprod}'/>
-                </a>
-                <p>${jogo.preco}</p>
-                <div style="display:flex; flex-direction:row; gap:5%;">
-                <button style="cursor: pointer;" onclick="adicionarAoCarrinho(${jogo.idproduto})">Adicionar ao Carrinho</button>
-                <button style="cursor: pointer;">Mais informações</button>
-                </div>
+            <p>${jogo.nomeprod}</p>
+    <a href='${jogo.imagem}' target='_blank'>
+        <img src='${jogo.imagem}' alt='${jogo.nomeprod}'/>
+    </a>
+    <p>${jogo.preco}</p>
+    <div style="display:flex; flex-direction:row; gap:5%;">
+        <!-- Adicione este campo de entrada -->
+        <input type="number" id="quantidade-${jogo.idproduto}" value="1" min="1" style="width: 50px; text-align: center;"/>
+        <button style="cursor: pointer;" onclick="adicionarAoCarrinho(${jogo.idproduto}, ${jogo.preco}, document.getElementById('quantidade-${jogo.idproduto}').value)">Adicionar ao Carrinho</button>
+    </div>
+
             `;
             categoriaDiv.appendChild(jogoDiv);
         });
@@ -304,31 +307,31 @@ function mostrarJogos(categorias) {
     // Simulando a resposta do servidor (substitua isso pela lógica de requisição AJAX real)
     const dadosDoServidor = {
         Nintendo: [
-            { nomeprod: 'Kirby’s Dream Buffet', imagem: 'https://i.postimg.cc/Yv04V4cH/Kirby-s-Dream-Buffet.jpg', preco: '49.99', categoria_id: 1 },
-            { nomeprod: 'Terraria', imagem: 'https://i.postimg.cc/0zkMsqnd/Terraria.jpg', preco: '29.99', categoria_id: 1 },
-            { nomeprod: 'Mortal Kombat 1', imagem: 'https://i.postimg.cc/kDWBR5hv/Mortal-Kombat-1.jpg', preco: '19.99', categoria_id: 1 },
-            { nomeprod: 'Mario Wonder', imagem: 'https://i.postimg.cc/Z0LdncRL/Mario-Wonder.jpg', preco: '39.99', categoria_id: 1 },
-            { nomeprod: 'Apex Legends', imagem: 'https://i.postimg.cc/2qzpkrXG/Apex-Legends.jpg', preco: '29.90', categoria_id: 1 },
-            { nomeprod: 'Fall Guys', imagem: 'https://i.postimg.cc/bGYMXLsF/Fall-Guys.jpg', preco: '14.99', categoria_id: 1 },
-            { nomeprod: 'Rocket League', imagem: 'https://i.postimg.cc/Thbt4Bt3/Rocket-League.jpg', preco: '24.99', categoria_id: 1 },
+            {idproduto: 1, nomeprod: 'Kirby’s Dream Buffet', imagem: 'https://i.postimg.cc/Yv04V4cH/Kirby-s-Dream-Buffet.jpg', preco: '49.99', categoria_id: 1 },
+            {idproduto: 2, nomeprod: 'Terraria', imagem: 'https://i.postimg.cc/0zkMsqnd/Terraria.jpg', preco: '29.99', categoria_id: 1 },
+            {idproduto: 3, nomeprod: 'Mortal Kombat 1', imagem: 'https://i.postimg.cc/kDWBR5hv/Mortal-Kombat-1.jpg', preco: '19.99', categoria_id: 1 },
+            {idproduto: 4, nomeprod: 'Mario Wonder', imagem: 'https://i.postimg.cc/Z0LdncRL/Mario-Wonder.jpg', preco: '39.99', categoria_id: 1 },
+            {idproduto: 5, nomeprod: 'Apex Legends', imagem: 'https://i.postimg.cc/2qzpkrXG/Apex-Legends.jpg', preco: '29.90', categoria_id: 1 },
+            {idproduto: 6, nomeprod: 'Fall Guys', imagem: 'https://i.postimg.cc/bGYMXLsF/Fall-Guys.jpg', preco: '14.99', categoria_id: 1 },
+            {idproduto: 7, nomeprod: 'Rocket League', imagem: 'https://i.postimg.cc/Thbt4Bt3/Rocket-League.jpg', preco: '24.99', categoria_id: 1 },
         ],
         Xbox: [
-            { nomeprod: 'Minecraft', imagem: 'https://i.postimg.cc/68HspDJN/Minecraft.jpg', preco: '29.99', categoria_id: 1 },
-            { nomeprod: 'Assassins Creed', imagem: 'https://i.postimg.cc/pytP4MP0/Assassins-Creed.jpg', preco: '49.99', categoria_id: 1 },
-            { nomeprod: 'Forza Horizon 5', imagem: 'https://i.postimg.cc/B8KG7Mk9/Forza-Horizon.jpg', preco: '59.99', categoria_id: 1 },
-            { nomeprod: 'Overwatch 2', imagem: 'https://i.postimg.cc/kBY4kY1B/Overwatch.jpg', preco: '49.99', categoria_id: 1 },
-            { nomeprod: 'Lego Fortnite', imagem: 'https://i.postimg.cc/1fVh3WRg/Lego-Fortnite.jpg', preco: '39.99', categoria_id: 1 },
-            { nomeprod: 'Fifa 22', imagem: 'https://i.postimg.cc/KK0xMR64/Fifa-22.jpg', preco: '59.99', categoria_id: 1 },
-            { nomeprod: 'Star Wars Jedi: Fallen Order', imagem: 'https://i.postimg.cc/14tc62qz/Star-Wars-Jedi-Fallen-Order.jpg', preco: '44.99', categoria_id: 1 },
+            {idproduto: 8, nomeprod: 'Minecraft', imagem: 'https://i.postimg.cc/68HspDJN/Minecraft.jpg', preco: '29.99', categoria_id: 1 },
+            {idproduto: 9, nomeprod: 'Assassins Creed', imagem: 'https://i.postimg.cc/pytP4MP0/Assassins-Creed.jpg', preco: '49.99', categoria_id: 1 },
+            {idproduto: 10, nomeprod: 'Forza Horizon 5', imagem: 'https://i.postimg.cc/B8KG7Mk9/Forza-Horizon.jpg', preco: '59.99', categoria_id: 1 },
+            {idproduto: 11, nomeprod: 'Overwatch 2', imagem: 'https://i.postimg.cc/kBY4kY1B/Overwatch.jpg', preco: '49.99', categoria_id: 1 },
+            {idproduto: 12, nomeprod: 'Lego Fortnite', imagem: 'https://i.postimg.cc/1fVh3WRg/Lego-Fortnite.jpg', preco: '39.99', categoria_id: 1 },
+            {idproduto: 13, nomeprod: 'Fifa 22', imagem: 'https://i.postimg.cc/KK0xMR64/Fifa-22.jpg', preco: '59.99', categoria_id: 1 },
+            {idproduto: 14, nomeprod: 'Star Wars Jedi: Fallen Order', imagem: 'https://i.postimg.cc/14tc62qz/Star-Wars-Jedi-Fallen-Order.jpg', preco: '44.99', categoria_id: 1 },
         ],
         Playstation: [
-            { nomeprod: 'The Last of Us Part II', imagem: 'https://i.postimg.cc/Cds5hx1B/The-Last-of-Us-Part-I.jpg', preco: '54.99', categoria_id: 1 },
-            { nomeprod: 'Ghost of Tsushima', imagem: 'https://i.postimg.cc/NKMk8nVD/Ghost-of-Tsushima.jpg', preco: '49.99', categoria_id: 1 },
-            { nomeprod: 'God of War', imagem: 'https://i.postimg.cc/Vd3XMNqf/God-of-War.jpg', preco: '39.99', categoria_id: 1 },
-            { nomeprod: 'Spider-Man: Miles Morales', imagem: 'https://i.postimg.cc/6TqHfyvn/Spider-Man-Miles-Morales.jpg', preco: '49.99', categoria_id: 1 },
-            { nomeprod: 'Resident Evil Village', imagem: 'https://i.postimg.cc/d7dk8M2z/Resident-Evil-Village.jpg', preco: '44.99', categoria_id: 1 },
-            { nomeprod: 'Deathloop', imagem: 'https://i.postimg.cc/QFfSRTvX/Deathloop.jpg', preco: '54.99', categoria_id: 1 },
-            { nomeprod: 'Gran Turismo 7', imagem: 'https://i.postimg.cc/mtJ6DM88/Gran-Turismo-7.jpg', preco: '59.99', categoria_id: 1 },
+            {idproduto: 15, nomeprod: 'The Last of Us Part II', imagem: 'https://i.postimg.cc/Cds5hx1B/The-Last-of-Us-Part-I.jpg', preco: '54.99', categoria_id: 1 },
+            {idproduto: 16, nomeprod: 'Ghost of Tsushima', imagem: 'https://i.postimg.cc/NKMk8nVD/Ghost-of-Tsushima.jpg', preco: '49.99', categoria_id: 1 },
+            {idproduto: 17, nomeprod: 'God of War', imagem: 'https://i.postimg.cc/Vd3XMNqf/God-of-War.jpg', preco: '39.99', categoria_id: 1 },
+            {idproduto: 18, nomeprod: 'Spider-Man: Miles Morales', imagem: 'https://i.postimg.cc/6TqHfyvn/Spider-Man-Miles-Morales.jpg', preco: '49.99', categoria_id: 1 },
+            {idproduto: 19, nomeprod: 'Resident Evil Village', imagem: 'https://i.postimg.cc/d7dk8M2z/Resident-Evil-Village.jpg', preco: '44.99', categoria_id: 1 },
+            {idproduto: 20, nomeprod: 'Deathloop', imagem: 'https://i.postimg.cc/QFfSRTvX/Deathloop.jpg', preco: '54.99', categoria_id: 1 },
+            {idproduto: 21, nomeprod: 'Gran Turismo 7', imagem: 'https://i.postimg.cc/mtJ6DM88/Gran-Turismo-7.jpg', preco: '59.99', categoria_id: 1 },
         ]
     };
 
@@ -338,14 +341,13 @@ function mostrarJogos(categorias) {
     
 });
 
-function adicionarAoCarrinho(idProduto) {
-    // Ajuste para obter o ID do usuário diretamente da resposta do servidor
+function adicionarAoCarrinho(idProduto, preco, quantidade) {
     fetch('/adicionar-ao-carrinho', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ productId: idProduto }),
+        body: JSON.stringify({ productId: idProduto, preco: preco, quantidade: quantidade }),
     })
     .then(response => response.json())
     .then(data => {
@@ -353,6 +355,9 @@ function adicionarAoCarrinho(idProduto) {
 
         // Adicione aqui a lógica para dar feedback ao usuário
         alert(data.mensagem);  // Exemplo: exibe um alerta com a mensagem do servidor
+
+        // Atualize os itens do carrinho na página
+        obterItensCarrinho();
     })
     .catch(error => {
         console.error('Erro ao adicionar ao carrinho:', error);
