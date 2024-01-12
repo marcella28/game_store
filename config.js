@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const path = require('path');
 const session = require('express-session');
 
+
 const app = express();
 
 const config = {
@@ -16,6 +17,10 @@ const config = {
         database: 'game_store'
     }
 };
+const ipAddress = '172.16.31.38'; //Endereço IP da máquina
+
+ 
+
 
 const port = config.server.port;
 const publicDirectoryPath = path.join(__dirname, 'game_store');
@@ -449,6 +454,8 @@ app.get('/obter-todos-comentarios', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+
+
+app.listen(port, ipAddress, () => {
+    console.log(`Servidor rodando em http://${ipAddress}:${port}`);
 });

@@ -155,18 +155,44 @@
 }
 
 
-        .comments {
-            margin: 50px ;
-        }
+        /* Estilo para a seção de comentários */
+.comments {
+    margin: 50px;
+}
 
-        .comment {
-            border: 0.5px solid #594461;
-            padding: 10px;
-            margin: 10px;
-            max-width: 90%;
-            max-height: max-content;
-            border-radius: 5%;
-        }
+/* Estilo para cada comentário individual */
+.comment {
+    border: 0.5px solid #594461;
+    padding: 10px;
+    margin: 10px;
+    max-width: 90%;
+    max-height: max-content;
+    border-radius: 5%;
+}
+
+/* Estilo para a área de entrada de novo comentário */
+#novo-comentario {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #594461;
+    border-radius: 5px;
+}
+
+/* Estilo para o botão de adicionar comentário */
+button {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #8a6a9f;
+    color: #fff;
+    border: none;
+    border-radius: 5%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #b594c4;
+}
 
         #nintendogames, #xboxgames, #playstationgames {
             height: 380px;
@@ -199,12 +225,15 @@
     margin: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra suave */
+    width: 390px;
+    height: 355px;
 }
 
 /* Adicionando estilos para as divs dos jogos Xbox */
 .xbox-games .exemplo {
     background-color: #f2eff3; /* Cor de fundo branca */
-
+    width: 390px;
+    height: 355px;
     padding: 15px;
     margin: 10px;
     border-radius: 10px;
@@ -214,7 +243,8 @@
 /* Adicionando estilos para as divs dos jogos Playstation */
 .playstation-games .exemplo {
     background-color: #f2eff3; /* Cor de fundo branca */
-
+    width: 390px;
+    height: 355px;
     padding: 15px;
     margin: 10px;
     border-radius: 10px;
@@ -243,8 +273,8 @@ button.adicionar-carrinho {
     border: none;
     border-radius: 5%;
     background-color: #8a6a9f;
- 
-    height: 30px;
+ width: 200px;
+    height: 40px;
     color: #fff;
     font-size: 14px;
     transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
@@ -259,6 +289,37 @@ button.adicionar-carrinho:hover {
     font-family: 'Orbitron', sans-serif; /* Fonte para o tema espacial */
 
 }
+
+  /* Estilo básico para o dropdown */
+  .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Estilo básico para os itens do dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
@@ -268,30 +329,38 @@ button.adicionar-carrinho:hover {
             <ul class="menu">
                 <li><a href="loja.html">Home</a></li>
                 <li class="dropdown" onclick="mostrarsubmenu('listasubmenu')">
-                    <a href="#" >Categorias</a>
+                    
                     <!-- Adicione os itens aos submenus -->
-<ul class="submenu" id="listasubmenu">
-    <li class="dropdown-item" onclick="mostrarsubmenu('xboxdrop')">Xbox
-    <!-- Adicione submenus específicos para cada item -->
-<ul class="submenu" id="xboxdrop">
-    <li>Item 1 Xbox</li>
-    <li>Item 2 Xbox</li>
-    <!-- Adicione mais itens conforme necessário -->
-</ul>
-</li>
-    <li class="dropdown-item" onclick="mostrarsubmenu('playstationdrop')">Playstation</li>
-    <ul class="submenu" id="playstationdrop">
-        <li>Item 1 Playstation</li>
-        <li>Item 2 Playstation</li>
-        <!-- Adicione mais itens conforme necessário -->
-    </ul>
-    <li class="dropdown-item" onclick="mostrarsubmenu('nintendodrop')">Nintendo</li>
-    <ul class="submenu" id="nintendodrop">
-        <li>Item 1 Nintendo</li>
-        <li>Item 2 Nintendo</li>
-        <!-- Adicione mais itens conforme necessário -->
-    </ul>
-</ul>
+<div style="display: flex; flex-direction: column;">
+    <div class="dropdown-content">
+        <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuNintendo')" onmouseout="fecharSubmenu('listasubmenuNintendo')">
+            <a href="#" >Nintendo</a>
+            <div id="listasubmenuNintendo" class="dropdown-content">
+                <a href="Kirby's Dream Buffet.html">Jogo 1 - Nintendo</a>
+                <a href="#">Jogo 2 - Nintendo</a>
+                <a href="#">Jogo 3 - Nintendo</a>
+            </div>
+        </li>
+        
+        <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuXbox')" onmouseout="fecharSubmenu('listasubmenuXbox')">
+            <a href="#">Xbox</a>
+            <div id="listasubmenuXbox" class="dropdown-content">
+                <a href="#">Jogo 1 - Xbox</a>
+                <a href="#">Jogo 2 - Xbox</a>
+                <a href="#">Jogo 3 - Xbox</a>
+            </div>
+        </li>
+        
+        <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuPlaystation')" onmouseout="fecharSubmenu('listasubmenuPlaystation')">
+            <a href="#">Playstation</a>
+            <div id="listasubmenuPlaystation" class="dropdown-content">
+                <a href="#">Jogo 1 - Playstation</a>
+                <a href="#">Jogo 2 - Playstation</a>
+                <a href="#">Jogo 3 - Playstation</a>
+            </div>
+        </li>
+    </div>
+</div>
 
 
 
@@ -355,19 +424,16 @@ button.adicionar-carrinho:hover {
     </section>
 
     <script>
-       function mostrarsubmenu(submenu) {
-    var submenuElement = document.getElementById(submenu);
-    if (submenuElement.style.display === 'block') {
-        submenuElement.style.display = 'none';
-    } else {
-        submenuElement.style.display = 'block';
-    }
-}
-
-// Adicione esta função para fechar o submenu quando clicar em um item
+  // Adicione esta função para fechar o submenu quando clicar em um item
 function fecharSubmenu(submenu) {
     var submenuElement = document.getElementById(submenu);
     submenuElement.style.display = 'none';
+}
+
+// Adicione estas funções para mostrar e fechar submenus ao passar o mouse
+function mostrarsubmenu(submenu) {
+    var submenuElement = document.getElementById(submenu);
+    submenuElement.style.display = 'block';
 }
 
         // Adicione a função mudarBackground ao seu script

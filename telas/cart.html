@@ -99,7 +99,7 @@
             margin-bottom: 10px;
         }
 
-        #confirmar-compra-btn, #excluir{
+        #confirmar-compra-btn, #excluir, #editar{
             cursor: pointer;
     border: none;
     display: block;
@@ -110,6 +110,10 @@
     color: #fff;
     font-size: 14px;
     transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .botoes{
+            display:flex; flex-direction:row; gap:2%;
         }
 
         
@@ -207,7 +211,10 @@ function obterItensCarrinho() {
                     <p>Quantidade: ${item.quantidade}</p>
                     <p>Preço unitário: ${item.preco}</p>
                     <p>Valor total: ${item.preco * item.quantidade}</p>
+                    <div class="botoes"> 
                     <button id="excluir" onclick="excluirItemCarrinho(${item.idProduto})">Excluir</button>
+                    <button id="editar" onclick="editarItemCarrinho(${item.idProduto}, ${item.quantidade})">Editar</button>
+</div>
                     <hr>
                 `;
                 carrinhoContainer.appendChild(itemDiv);
@@ -319,6 +326,33 @@ function obterHistoricoCompras() {
         .catch(error => console.error('Erro ao obter histórico de compras:', error));
 }
 
+function editarItemCarrinho(idProduto, quantidadeAtual) {
+    const novaQuantidade = prompt('Digite a nova quantidade:', quantidadeAtual);
+
+    if (novaQuantidade !== null && !isNaN(novaQuantidade) && novaQuantidade >= 0) {
+        // Faça uma requisição ao servidor para editar a quantidade do item no carrinho
+        fetch(`/editar-item-carrinho/${idProduto}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ novaQuantidade }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Resposta do servidor ao editar item:', data);
+
+            // Atualize a exibição do carrinho após a edição
+            obterItensCarrinho();
+        })
+        .catch(error => {
+            console.error('Erro ao editar item do carrinho:', error);
+            // Adicione lógica para feedback de erro se necessário
+        });
+    } else {
+        alert('Quantidade inválida. Tente novamente.');
+    }
+}
 // Chamadas para as funções de inicialização
 document.addEventListener('DOMContentLoaded', () => {
     obterNomeUsuario();
