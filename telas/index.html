@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Início</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
 
-        
-        body {
+body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -16,16 +17,34 @@
         }
 
         #title {
-            display: flex;
-            text-align: center;
-            font-size: 45px;
-            justify-content: center;
-            transition: color 0.5s ease; /* Adiciona uma transição de 1 segundo para a cor do texto */
-        }
+    display: flex;
+    text-align: center;
+    font-size: 45px;
+    justify-content: center;
+    transition: color 0.5s ease; /* Adiciona uma transição de 1 segundo para a cor do texto */
+    font-family: 'Orbitron', sans-serif; /* Fonte para o tema espacial */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona um leve sombreamento ao texto do título */
+}
 
-        h1 {
-            color: #181717;
-        }
+h1 {
+    color: #181717;
+}
+
+#cadastro, #login {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 100px;
+    width: 200px;
+    font-size: 22px;
+    transition: background 0.5s ease, color 0.5s ease, box-shadow 0.5s ease; /* Adiciona uma transição de 0.5 segundos para a cor de fundo, texto e sombreamento do botão */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona um leve sombreamento ao botão */
+}
 
         #content {
             display: flex;
@@ -38,61 +57,91 @@
         }
 
         h2 {
-            color: #202020;
+            color: #0f0f0f;
             font-size: 28px;
             margin-bottom: 4%;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            height: 100px;
-            width: 200px;
-            font-size: 20px;
-            transition: background 0.5s ease, color 0.5s ease; /* Adiciona uma transição de 0.5 segundos para a cor de fundo e texto do botão */
-        }
         
 
         /* Modal styles */
         .modal {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 300px;
-            height: 300px;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-        .modal-container {
-            background-color: #fff;
-            max-width: 400px;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+.modal-container {
+    background-color: #e1dbe4;
+    max-width: 400px;
+    width: 80%; /* Ajuste a largura conforme necessário */
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10%;
+}
 
-        .modal-content {
-            text-align: left;
-        }
+.modal-content label {
+    margin-bottom: 5px;
+}
 
-        .close-modal {
-            background-color: #272652;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.modal-content input {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Estilo para os botões dentro do modal */
+.modal-content button {
+    width: 100%; /* Botão ocupará 100% da largura do container pai */
+}
+
+/* Estilo para os botões lado a lado */
+.modal-content button,
+.close-modal {
+    width: 48%; /* Os botões ocuparão 48% da largura do container pai */
+    margin-right: 4%; /* Adiciona uma margem à direita para separar os botões */
+}
+
+/* Limpeza de estilo para o título dentro do modal */
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content button,
+.close-modal {
+    background-color: #272652;
+    color: white;
+    padding: 10px 15px; /* Ajuste o tamanho do botão conforme necessário */
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+    transition: background 0.5s ease, color 0.5s ease, box-shadow 0.5s ease; /* Adiciona uma transição de 0.5 segundos */
+}
+
+.modal-content{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Adiciona um efeito de fundo desfocado para os modais */
+.modal.is-visible {
+    backdrop-filter: blur(5px);
+}
 
         #buttons{
             display: flex;
@@ -105,13 +154,15 @@
         }
 
         #cadastro{
-            background-color: #b3a0c9;
-            color: #272652;
+            background-color: #9a6bcf;
+            color: #cfcfda;
+            
         }
 
         #login{
             background-color: #b3a0c9;
             color: #272652;
+            
         }
 
         #principal{
@@ -121,6 +172,12 @@ align-items: center;
 flex-direction: column;
 padding-bottom: 10%;
 padding-top: 5%;
+        }
+
+        #cadastrotitle, #logintitle{
+            font-family: 'Orbitron', sans-serif; /* Fonte para o tema espacial */
+   
+    font-size: 30px;
         }
     </style>
 </head>
@@ -132,8 +189,8 @@ padding-top: 5%;
     <div id="content">
         <h2>Explore seu universo gamer na Gameverse Store: onde aventura e diversão se encontram!</h2>
         <div id="buttons">
-        <button id="cadastro" onclick="openModalCad('cadastroModal')"><strong>Cadastro</strong> </button>
         <button id="login" onclick="openModalLog('loginModal')"><strong>Login</strong></button>
+        <button id="cadastro" onclick="openModalCad('cadastroModal')"><strong>Cadastro</strong> </button>
     </div>
     </div>
 </div>
@@ -142,7 +199,7 @@ padding-top: 5%;
     <div id="cadastroModal" class="modal">
         <div class="modal-container">
             <div class="modal-content">
-                <h2>Cadastro</h2>
+                <h2 id="cadastrotitle">Cadastro</h2>
                 <form id="cadastroForm">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" required>
@@ -153,9 +210,11 @@ padding-top: 5%;
                     <label for="senha">Senha:</label>
                     <input type="password" id="senha" name="senha" required>
                 
+                    <div style=" display: flex; flex-flow: row;">
                     <button type="button" onclick="cadastrarUsuario()">Cadastrar</button>
                 </form>
                 <button class="close-modal" onclick="closeModalCad('cadastroModal')">Fechar</button>
+            </div>
             </div>
         </div>
     </div>
@@ -164,17 +223,18 @@ padding-top: 5%;
     <div id="loginModal" class="modal">
         <div class="modal-container">
             <div class="modal-content">
-                <h2>Login</h2>
+                <h2 id="logintitle">Login</h2>
                 <form id="loginForm">
                     <label for="loginEmail">Email:</label>
                     <input type="email" id="loginEmail" name="loginEmail" required>
     
                     <label for="loginSenha">Senha:</label>
                     <input type="password" id="loginSenha" name="loginSenha" required>
-    
+                    <div style=" display: flex; flex-flow: row;">
                     <button type="button" onclick="fazerLogin()">Entrar</button>
                 </form>
                 <button class="close-modal" onclick="closeModalLog('loginModal')">Fechar</button>
+            </div>
             </div>
         </div>
     </div>
