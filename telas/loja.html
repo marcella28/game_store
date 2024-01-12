@@ -341,9 +341,16 @@ button.adicionar-carrinho:hover {
 
     <section class="comments">
         <h2>Comentários Gerais</h2>
-        <div class="comment">
-      
+        <div class="comment-section">
+            <div id="comentarios-lista"></div>
+            <textarea id="novo-comentario" placeholder="Digite seu comentário"></textarea>
+            <button onclick="adicionarComentario()">Adicionar Comentário</button>
         </div>
+
+        
+            <div id="comentarios-gerais-container">
+                <!-- Aqui aparecerão os comentários gerais -->
+            </div>
        
     </section>
 
@@ -475,6 +482,51 @@ function mostrarJogos(categorias) {
     
 });
 
+fetch('/obter-comentarios')
+    .then(response => response.json())
+    .then(comentarios => {
+        const comentariosLista = document.getElementById('comentarios-lista');
+
+        comentarios.forEach(comentario => {
+            const comentarioDiv = document.createElement('div');
+            comentarioDiv.classList.add('comment');
+            comentarioDiv.innerHTML = `
+                <p><strong>${comentario.usuario}</strong>: ${comentario.texto}</p>
+            `;
+            comentariosLista.appendChild(comentarioDiv);
+        });
+    })
+    .catch(error => console.error('Erro ao obter comentários:', error));
+function adicionarComentario() {
+    const novoComentarioInput = document.getElementById('novo-comentario');
+    const novoComentarioTexto = novoComentarioInput.value;
+
+    if (novoComentarioTexto.trim() !== '') {
+        // Aqui você pode usar o fetch para enviar o novo comentário para o servidor
+        fetch('/adicionar-comentario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ texto: novoComentarioTexto }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Adicione aqui a lógica para dar feedback ao usuário
+            alert(data.mensagem);  // Exemplo: exibe um alerta com a mensagem do servidor
+
+            // Atualize a lista de comentários na página
+            obterComentarios();
+        })
+        .catch(error => {
+            console.error('Erro ao adicionar comentário:', error);
+            // Adicione aqui a lógica para dar feedback ao usuário em caso de erro
+        });
+    } else {
+        alert('Digite um comentário válido.');
+    }
+}
+
 function adicionarAoCarrinho(idProduto, preco, quantidade) {
     fetch('/adicionar-ao-carrinho', {
         method: 'POST',
@@ -498,6 +550,39 @@ function adicionarAoCarrinho(idProduto, preco, quantidade) {
         // Adicione aqui a lógica para dar feedback ao usuário em caso de erro
     });
 }
+
+function obterComentariosGerais() {
+    fetch('/obter-todos-comentarios')
+        .then(response => response.json())
+        .then(comentarios => {
+            const comentariosContainer = document.getElementById('comentarios-gerais-container');
+
+            // Limpe o conteúdo atual dos comentários gerais
+            comentariosContainer.innerHTML = '';
+
+            // Adicione os comentários gerais ao HTML
+            comentarios.forEach(comentario => {
+                // Converta a string da data para um objeto Date
+                const dataPublicacao = new Date(comentario.dataPublicacao);
+
+                const comentarioDiv = document.createElement('div');
+                comentarioDiv.innerHTML = `
+                    <p><strong>${comentario.usuario}</strong> em ${dataPublicacao.toLocaleString()}:</p>
+                    <p>${comentario.texto}</p>
+                    <hr>
+                `;
+                comentariosContainer.appendChild(comentarioDiv);
+            });
+        })
+        .catch(error => console.error('Erro ao obter comentários gerais:', error));
+}
+
+// Chame a função para obter os comentários gerais durante a inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    obterComentariosGerais();
+});
+
+
 </script>
 
 </body>

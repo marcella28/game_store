@@ -375,7 +375,79 @@ app.get('/obter-historico-compras', (req, res) => {
     }
 });
 
+// Adicione esta rota para obter os comentários
+app.get('/obter-comentarios', (req, res) => {
+    const query = `
+        SELECT usuario, texto
+        FROM comentarios;
+    `;
 
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error('Erro ao obter comentários do banco de dados:', error);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+            return;
+        }
+
+        const comentarios = results.map(comentario => ({
+            usuario: comentario.usuario,
+            texto: comentario.texto,
+        }));
+
+        res.json(comentarios);
+    });
+});
+
+// Adicione esta rota para adicionar um novo comentário
+app.post('/adicionar-comentario', (req, res) => {
+    const { texto } = req.body;
+    const userId = req.session.userId;
+
+    if (userId) {
+        const query = `
+            INSERT INTO comentarios (idusers, comentario)
+            VALUES (?, ?);
+        `;
+
+        connection.query(query, [userId, texto], (error, results) => {
+            if (error) {
+                console.error('Erro ao adicionar comentário no banco de dados:', error);
+                res.status(500).json({ error: 'Erro interno do servidor' });
+                return;
+            }
+
+            res.status(200).json({ mensagem: 'Comentário adicionado com sucesso!' });
+        });
+    } else {
+        res.status(401).json({ error: 'Usuário não autenticado' });
+    }
+});
+
+// Adicione esta rota para obter todos os comentários
+app.get('/obter-todos-comentarios', (req, res) => {
+    const query = `
+        SELECT u.nomeuser AS usuario, c.comentario, c.data_publicacao
+        FROM comentarios c
+        LEFT JOIN users u ON c.idusers = u.idusers
+        ORDER BY c.data_publicacao DESC;
+    `;
+
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error('Erro ao obter todos os comentários do banco de dados:', error);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+            return;
+        }
+
+        const comentarios = results.map(comentario => ({
+            usuario: comentario.usuario,
+            texto: comentario.comentario,
+            dataPublicacao: comentario.data_publicacao,
+        }));
+
+        res.json(comentarios);
+    });
+});
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
