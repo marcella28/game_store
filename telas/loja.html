@@ -69,14 +69,54 @@
         }
 
         #listasubmenu {
-            display: none;
-            position: absolute;
-            top: 30px;
-            background-color: #e61414;
-            padding: 10px;
-            margin-top: 3%;
-            margin-bottom: 3%;
-        }
+    list-style-type: none; /* Remove as bolinhas/marcadores da lista */
+    display: none;
+    position: absolute;
+    top: 30px;
+    background-color: #8e4eaa;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 150px;
+    margin: 10px;
+}
+
+/* Atualiza o estilo do submenu para torná-lo mais atraente */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background-color: #8e4eaa;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 150px;
+    margin: 10px;
+    border-radius: 5px; /* Adiciona borda arredondada */
+}
+
+.dropdown-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #694080;
+}
+
+/* Remove o estilo de lista dos submenus */
+.submenu li {
+    list-style-type: none;
+}
+
+/* Adiciona um espaçamento entre os itens do submenu */
+.submenu li {
+    padding: 5px;
+}
+
+/* Estiliza os itens do submenu */
+.submenu li:hover {
+    background-color: #694080;
+    cursor: pointer;
+}
 
 
         .games {
@@ -88,7 +128,7 @@
         }
 
         .category {
-            text-align: center;
+            text-align: start;
             margin-top: 5%;
             
         }
@@ -116,13 +156,16 @@
 
 
         .comments {
-            margin: 20px 0;
+            margin: 50px ;
         }
 
         .comment {
-            border: 1px solid #ccc;
+            border: 0.5px solid #594461;
             padding: 10px;
-            margin-bottom: 10px;
+            margin: 10px;
+            max-width: 90%;
+            max-height: max-content;
+            border-radius: 5%;
         }
 
         #nintendogames, #xboxgames, #playstationgames {
@@ -226,11 +269,35 @@ button.adicionar-carrinho:hover {
                 <li><a href="loja.html">Home</a></li>
                 <li class="dropdown" onclick="mostrarsubmenu('listasubmenu')">
                     <a href="#" >Categorias</a>
-                    <ul class="submenu" id="listasubmenu">
-                        <ul style="margin: 5%;">Xbox</a></ul>
-                        <ul style="margin: 5%;">Playstation</a></ul>
-                        <ul style="margin: 5%;">Nintendo</a></ul>
-                    </ul>
+                    <!-- Adicione os itens aos submenus -->
+<ul class="submenu" id="listasubmenu">
+    <li class="dropdown-item" onclick="mostrarsubmenu('xboxdrop')">Xbox
+    <!-- Adicione submenus específicos para cada item -->
+<ul class="submenu" id="xboxdrop">
+    <li>Item 1 Xbox</li>
+    <li>Item 2 Xbox</li>
+    <!-- Adicione mais itens conforme necessário -->
+</ul>
+</li>
+    <li class="dropdown-item" onclick="mostrarsubmenu('playstationdrop')">Playstation</li>
+    <ul class="submenu" id="playstationdrop">
+        <li>Item 1 Playstation</li>
+        <li>Item 2 Playstation</li>
+        <!-- Adicione mais itens conforme necessário -->
+    </ul>
+    <li class="dropdown-item" onclick="mostrarsubmenu('nintendodrop')">Nintendo</li>
+    <ul class="submenu" id="nintendodrop">
+        <li>Item 1 Nintendo</li>
+        <li>Item 2 Nintendo</li>
+        <!-- Adicione mais itens conforme necessário -->
+    </ul>
+</ul>
+
+
+
+
+
+
                 </li>
                 <li><a href="user.html">Usuário</a></li>
                 <li><a href="cart.html">Carrinho</a></li>
@@ -238,6 +305,8 @@ button.adicionar-carrinho:hover {
         </nav>
         
     </header>
+
+  
     <div style="display: flex; justify-content: center; margin-top: 2%;">
         <p>Olá, <span id="nome-usuario-loja"></span>!</p>
     </div>
@@ -273,21 +342,41 @@ button.adicionar-carrinho:hover {
     <section class="comments">
         <h2>Comentários Gerais</h2>
         <div class="comment">
-            <p>Comentário 1...</p>
-            <span>Usuário123</span>
+      
         </div>
        
     </section>
 
     <script>
-        function mostrarsubmenu(submenu) {
-            var submenuElement = document.getElementById(submenu);
-            if (submenuElement.style.display === 'block') {
-                submenuElement.style.display = 'none';
-            } else {
-                submenuElement.style.display = 'block';
-            }
-        }
+       function mostrarsubmenu(submenu) {
+    var submenuElement = document.getElementById(submenu);
+    if (submenuElement.style.display === 'block') {
+        submenuElement.style.display = 'none';
+    } else {
+        submenuElement.style.display = 'block';
+    }
+}
+
+// Adicione esta função para fechar o submenu quando clicar em um item
+function fecharSubmenu(submenu) {
+    var submenuElement = document.getElementById(submenu);
+    submenuElement.style.display = 'none';
+}
+
+        // Adicione a função mudarBackground ao seu script
+function mudarBackground(elemento) {
+    elemento.style.backgroundColor = '#694080'; // Cor desejada ao passar o mouse
+}
+
+// Adicione também a função para restaurar o background quando o mouse sair do item
+function restaurarBackground(elemento) {
+    elemento.style.backgroundColor = '';
+}
+
+
+
+
+
     
         document.addEventListener('DOMContentLoaded', () => {
     // ...
