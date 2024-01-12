@@ -136,7 +136,7 @@
     </header>
 
     <section>
-        <h2>Carrinho de compras de: <span id="nome-usuario-cart"></span></h2>
+        <h2>Carrinho de compras: </span></h2>
 
         <div id="carrinho-container">
             <!-- Aqui aparecerão os itens adicionados ao carrinho -->
@@ -149,7 +149,7 @@
     </section>
 
     <section>
-        <h2>Histórico de Compras</h2>
+        <h2>Histórico de Compras:</h2>
     
         <div id="historico-compras-container">
             <!-- Aqui aparecerão as informações do histórico de compras -->
@@ -157,6 +157,9 @@
     </section>  
 
     <script>
+        function formatarValorParaReal(valor) {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
         // Função para obter o nome do usuário e exibi-lo no carrinho
         function obterNomeUsuario() {
     fetch('/obter-informacoes-usuario')
@@ -301,9 +304,12 @@ function obterHistoricoCompras() {
 
             // Adicione as informações do histórico de compras ao HTML
             historicoCompras.forEach(compra => {
+                // Converta a string da data para um objeto Date
+                const dataCompra = new Date(compra.dataCompra);
+
                 const compraDiv = document.createElement('div');
                 compraDiv.innerHTML = `
-                    <p>Compra em ${compra.dataCompra}</p>
+                    <p>Compra realizada em: ${dataCompra.toLocaleString()}</p>
                     <p>Valor Total: ${formatarValorParaReal(compra.valorTotal)}</p>
                     <hr>
                 `;
@@ -317,6 +323,7 @@ function obterHistoricoCompras() {
 document.addEventListener('DOMContentLoaded', () => {
     obterNomeUsuario();
     obterItensCarrinho();
+    obterHistoricoCompras(); // Adicione esta linha
 });
 </script>
 </body>

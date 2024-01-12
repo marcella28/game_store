@@ -293,25 +293,88 @@ app.post('/confirmar-compra', (req, res) => {
     const userId = req.session.userId;
 
     if (userId) {
-        const query = `
-            DELETE FROM carrinho
-            WHERE idusers = ?;
+        // Obtenha o valor total da compra
+        const queryObterValorTotal = `
+            SELECT SUM(p.preco * c.quantidade) AS valorTotal
+            FROM carrinho c
+            INNER JOIN produtos p ON c.idproduto = p.idproduto
+            WHERE c.idusers = ?;
         `;
 
-        connection.query(query, [userId], (error, results) => {
+        connection.query(queryObterValorTotal, [userId], (error, results) => {
             if (error) {
-                console.error('Erro ao confirmar compra e excluir itens do carrinho:', error);
+                console.error('Erro ao obter valor total da compra:', error);
                 res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
                 return;
             }
 
-            console.log('Compra confirmada e itens do carrinho excluídos com sucesso!');
-            res.status(200).json({ mensagem: 'Compra confirmada e itens do carrinho excluídos com sucesso!' });
+            const valorTotal = results[0].valorTotal;
+
+            // Insira os detalhes da compra na tabela 'compras'
+            const queryInserirCompra = `
+                INSERT INTO compras (idusers, valorTotal)
+                VALUES (?, ?);
+            `;
+
+            connection.query(queryInserirCompra, [userId, valorTotal], (error, results) => {
+                if (error) {
+                    console.error('Erro ao confirmar compra e inserir na tabela de compras:', error);
+                    res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
+                    return;
+                }
+
+                // Exclua os itens do carrinho após a confirmação da compra
+                const queryExcluirCarrinho = `
+                    DELETE FROM carrinho
+                    WHERE idusers = ?;
+                `;
+
+                connection.query(queryExcluirCarrinho, [userId], (error, results) => {
+                    if (error) {
+                        console.error('Erro ao excluir itens do carrinho após a compra:', error);
+                        res.status(500).json({ error: 'Erro interno do servidor', mensagem: error.message });
+                        return;
+                    }
+
+                    console.log('Compra confirmada e itens do carrinho excluídos com sucesso!');
+                    res.status(200).json({ mensagem: 'Compra confirmada e itens do carrinho excluídos com sucesso!' });
+                });
+            });
         });
     } else {
         res.status(401).send('Usuário não autenticado');
     }
 });
+
+app.get('/obter-historico-compras', (req, res) => {
+    const userId = req.session.userId;
+
+    if (userId) {
+        const query = `
+            SELECT dataCompra, valorTotal
+            FROM compras
+            WHERE idusers = ?;
+        `;
+
+        connection.query(query, [userId], (error, results) => {
+            if (error) {
+                console.error('Erro ao obter histórico de compras do banco de dados:', error);
+                res.status(500).json({ error: 'Erro interno do servidor' });
+                return;
+            }
+
+            const historicoCompras = results.map(compra => ({
+                dataCompra: compra.dataCompra,
+                valorTotal: compra.valorTotal,
+            }));
+
+            res.json(historicoCompras);
+        });
+    } else {
+        res.status(401).send('Usuário não autenticado');
+    }
+});
+
 
 
 app.listen(port, () => {
