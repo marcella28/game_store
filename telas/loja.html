@@ -118,6 +118,40 @@
     cursor: pointer;
 }
 
+  /* Estilo básico para o dropdown */
+  .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #e8b5f5;
+           border-radius: 5%;
+           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Estilo básico para os itens do dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #edcef5;
+           border-radius: 10%;
+
+        }
+
 
         .games {
             display: flex;
@@ -290,36 +324,7 @@ button.adicionar-carrinho:hover {
 
 }
 
-  /* Estilo básico para o dropdown */
-  .dropdown {
-            position: relative;
-            display: inline-block;
-        }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            min-width: 160px;
-            z-index: 1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Estilo básico para os itens do dropdown */
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
     </style>
 </head>
 <body>
@@ -336,27 +341,42 @@ button.adicionar-carrinho:hover {
         <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuNintendo')" onmouseout="fecharSubmenu('listasubmenuNintendo')">
             <a href="#" >Nintendo</a>
             <div id="listasubmenuNintendo" class="dropdown-content">
-                <a href="Kirby's Dream Buffet.html">Jogo 1 - Nintendo</a>
-                <a href="#">Jogo 2 - Nintendo</a>
-                <a href="#">Jogo 3 - Nintendo</a>
+                <a href="Kirbys-Dream-Buffet.html">Kirby's Dream Buffet</a>
+                <a href="Terraria.html">Terraria</a>
+                <a href="Mortal-Kombat-1.html">Mortal Kombat 1</a>
+                <a href="Mario-Wonder.html">Mario Wonder</a>
+                <a href="Apex-Legends.html">Apex Legends</a>
+                <a href="Fall-Guys.html">Fall Guys</a>
+                <a href="Rocket-League.html">Rocket League</a>
+                
             </div>
         </li>
         
         <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuXbox')" onmouseout="fecharSubmenu('listasubmenuXbox')">
             <a href="#">Xbox</a>
             <div id="listasubmenuXbox" class="dropdown-content">
-                <a href="#">Jogo 1 - Xbox</a>
-                <a href="#">Jogo 2 - Xbox</a>
-                <a href="#">Jogo 3 - Xbox</a>
+                <a href="Minecraft.html">Minecraft</a>
+                <a href="Assassins-Creed.html">Assassins Creed</a>
+                <a href="Forza-Horizon.html">Forza Horizon</a>
+                <a href="Overwatch-2.html">Overwatch 2</a>
+                <a href="Lego-Fortnite.html">Lego Fortnite</a>
+                <a href="FIFA-22.html">FIFA 22</a>
+                <a href="Star-Wars-Jedi-Fallen-Order.html">Star Wars Jedi: Fallen Order</a>
+                
             </div>
         </li>
         
         <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuPlaystation')" onmouseout="fecharSubmenu('listasubmenuPlaystation')">
             <a href="#">Playstation</a>
             <div id="listasubmenuPlaystation" class="dropdown-content">
-                <a href="#">Jogo 1 - Playstation</a>
-                <a href="#">Jogo 2 - Playstation</a>
-                <a href="#">Jogo 3 - Playstation</a>
+                <a href="The-Last-of-Us-Part-II.html">The Last of Us Part II</a>
+                <a href="Ghost-of-Tsushima.html">Ghost of Tsushima</a>
+                <a href="God-of-War.html">God of War</a>
+                <a href="Spider-Man-Miles-Morales.html">Spider-Man: Miles Morales</a>
+                <a href="Resident-Evil-Village.html">Resident Evil Village</a>
+                <a href="Deathloop.html">Deathloop</a>
+                <a href="Gran-Turismo-7.html">Gran Turismo 7</a>
+                
             </div>
         </li>
     </div>
@@ -494,9 +514,9 @@ function mostrarJogos(categorias) {
             jogoDiv.classList.add('exemplo');
             jogoDiv.innerHTML = `
             <p style="font-size:20px;">${jogo.nomeprod}</p>
-    <a href='${jogo.imagem}' target='_blank'>
+    
         <img src='${jogo.imagem}' alt='${jogo.nomeprod}'/>
-    </a>
+    
     <p>${jogo.preco}</p>
     <div style="display:flex; flex-direction:row; gap:5%;">
         <!-- Adicione este campo de entrada -->

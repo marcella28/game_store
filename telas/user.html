@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
+          body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -69,14 +69,89 @@
         }
 
         #listasubmenu {
+    list-style-type: none; /* Remove as bolinhas/marcadores da lista */
+    display: none;
+    position: absolute;
+    top: 30px;
+    background-color: #8e4eaa;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 150px;
+    margin: 10px;
+}
+
+/* Atualiza o estilo do submenu para torná-lo mais atraente */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background-color: #8e4eaa;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 150px;
+    margin: 10px;
+    border-radius: 5px; /* Adiciona borda arredondada */
+}
+
+.dropdown-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #694080;
+}
+
+/* Remove o estilo de lista dos submenus */
+.submenu li {
+    list-style-type: none;
+}
+
+/* Adiciona um espaçamento entre os itens do submenu */
+.submenu li {
+    padding: 5px;
+}
+
+/* Estiliza os itens do submenu */
+.submenu li:hover {
+    background-color: #694080;
+    cursor: pointer;
+}
+
+  /* Estilo básico para o dropdown */
+  .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
             display: none;
             position: absolute;
-            top: 30px;
-            background-color: #e61414;
-            padding: 10px;
-            margin-top: 3%;
-            margin-bottom: 3%;
+            background-color: #e8b5f5;
+           border-radius: 5%;
+           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            min-width: 160px;
+            z-index: 1;
         }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Estilo básico para os itens do dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #edcef5;
+           border-radius: 10%;
+
+        }
+
 
 
         .container {
@@ -139,21 +214,69 @@
 <body>
     <header>
         <nav>
-            <div class="logo">Gameverse Store</div>
+            <div class="logo">Gameverse Store </div>
             <ul class="menu">
                 <li><a href="loja.html">Home</a></li>
                 <li class="dropdown" onclick="mostrarsubmenu('listasubmenu')">
-                    <a href="#" >Categorias</a>
-                    <ul class="submenu" id="listasubmenu">
-                        <ul style="margin: 5%;">Xbox</a></ul>
-                        <ul style="margin: 5%;">Playstation</a></ul>
-                        <ul style="margin: 5%;">Nintendo</a></ul>
-                    </ul>
+                    
+                    <!-- Adicione os itens aos submenus -->
+<div style="display: flex; flex-direction: column;">
+    <div class="dropdown-content">
+        <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuNintendo')" onmouseout="fecharSubmenu('listasubmenuNintendo')">
+            <a href="#" >Nintendo</a>
+            <div id="listasubmenuNintendo" class="dropdown-content">
+                <a href="Kirbys-Dream-Buffet.html">Kirby's Dream Buffet</a>
+                <a href="Terraria.html">Terraria</a>
+                <a href="Mortal-Kombat-1.html">Mortal Kombat 1</a>
+                <a href="Mario-Wonder.html">Mario Wonder</a>
+                <a href="Apex-Legends.html">Apex Legends</a>
+                <a href="Fall-Guys.html">Fall Guys</a>
+                <a href="Rocket-League.html">Rocket League</a>
+                
+            </div>
+        </li>
+        
+        <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuXbox')" onmouseout="fecharSubmenu('listasubmenuXbox')">
+            <a href="#">Xbox</a>
+            <div id="listasubmenuXbox" class="dropdown-content">
+                <a href="Minecraft.html">Minecraft</a>
+                <a href="Assassins-Creed.html">Assassins Creed</a>
+                <a href="Forza-Horizon.html">Forza Horizon</a>
+                <a href="Overwatch-2.html">Overwatch 2</a>
+                <a href="Lego-Fortnite.html">Lego Fortnite</a>
+                <a href="FIFA-22.html">FIFA 22</a>
+                <a href="Star-Wars-Jedi-Fallen-Order.html">Star Wars Jedi: Fallen Order</a>
+                
+            </div>
+        </li>
+        
+        <li class="dropdown" onmouseover="mostrarsubmenu('listasubmenuPlaystation')" onmouseout="fecharSubmenu('listasubmenuPlaystation')">
+            <a href="#">Playstation</a>
+            <div id="listasubmenuPlaystation" class="dropdown-content">
+                <a href="The-Last-of-Us-Part-II.html">The Last of Us Part II</a>
+                <a href="Ghost-of-Tsushima.html">Ghost of Tsushima</a>
+                <a href="God-of-War.html">God of War</a>
+                <a href="Spider-Man-Miles-Morales.html">Spider-Man: Miles Morales</a>
+                <a href="Resident-Evil-Village.html">Resident Evil Village</a>
+                <a href="Deathloop.html">Deathloop</a>
+                <a href="Gran-Turismo-7.html">Gran Turismo 7</a>
+                
+            </div>
+        </li>
+    </div>
+</div>
+
+
+
+
+
+
                 </li>
                 <li><a href="user.html">Usuário</a></li>
                 <li><a href="cart.html">Carrinho</a></li>
             </ul>
         </nav>
+        
     </header>
 
     
@@ -170,6 +293,28 @@
     </div>
 </div>
     <script>
+
+        // Adicione esta função para fechar o submenu quando clicar em um item
+function fecharSubmenu(submenu) {
+    var submenuElement = document.getElementById(submenu);
+    submenuElement.style.display = 'none';
+}
+
+// Adicione estas funções para mostrar e fechar submenus ao passar o mouse
+function mostrarsubmenu(submenu) {
+    var submenuElement = document.getElementById(submenu);
+    submenuElement.style.display = 'block';
+}
+
+        // Adicione a função mudarBackground ao seu script
+function mudarBackground(elemento) {
+    elemento.style.backgroundColor = '#694080'; // Cor desejada ao passar o mouse
+}
+
+// Adicione também a função para restaurar o background quando o mouse sair do item
+function restaurarBackground(elemento) {
+    elemento.style.backgroundColor = '';
+}
         document.addEventListener('DOMContentLoaded', () => {
             // ...
 
