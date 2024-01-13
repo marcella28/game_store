@@ -154,14 +154,8 @@
 
 
 
-        .container {
-            margin: 2%;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
+       
+        
 
         h2 {
             margin-top: 20px;
@@ -207,8 +201,119 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra suave */
             height: 300px;
             max-width: max-content;
+            margin: 5%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
+           /* Nova regra de mídia para tablets */
+       @media only screen and (max-width: 768px) {
+        .menu {
+                margin-left: 2vw;
+                font-size: 2vw;
+            }
+
+            .logo {
+                font-size: 4vw;
+            }
+
+            .dropdown-content {
+                width: 200px;
+            }
+            
+
+            .games .category {
+                margin-top: 10%; /* Ajusta o espaçamento superior para telas menores */
+            }
+
+            .rolar {
+                overflow-x: auto; /* Altera para rolagem automática em telas menores */
+            }
+
+            .comment-section {
+                margin: 10px; /* Adiciona margem interna para melhor espaçamento em telas menores */
+            }
+
+            textarea {
+                width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+            }
+        }
+
+        /* Nova regra de mídia para tablets pequenos, mini iPads e smartphones */
+        @media only screen and (max-width: 600px) {
+
+            .menu {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 1.5vw;
+                margin: 1vw;
+                margin-top: 2vw;
+                padding: 0;
+                gap: 1vw;
+            }
+
+            .menu li {
+                margin: 0;
+                padding: 0;
+            }
+
+            .logo {
+                font-size: x-large;
+                margin-right: 0;
+            }
+
+            .dropdown-content {
+                width: 100%;
+            }
+
+            nav{
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                justify-content: start;
+            }
+           
+            .games .category {
+                margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
+            }
+
+            .rolar {
+                overflow-x: auto;
+                white-space: normal; /* Permite que os elementos quebrem para a próxima linha */
+            }
+
+            .comment-section {
+                margin: 5px; /* Adiciona margem interna menor para a área de comentários */
+            }
+
+            textarea {
+                width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+            }
+        }
+
+/* Adicione estas regras de mídia para telas menores, como smartphones */
+@media only screen and (max-width: 600px) {
+
+    
+
+   
+
+    .menu{
+        gap: 5px;
+        margin-top: 18px;
+        margin-left: 0%;
+    }
+
+
+nav a {
+        font-size: 14px;
+    }
+}
     </style>
 </head>
 <body>
