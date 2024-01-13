@@ -7,20 +7,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #e1dbe4;
-            
         }
 
         header {
             background-color: #333;
             color: #fff;
-            padding: 10px;
+            padding: 2vw; /* Utilizando vw para se ajustar à largura da viewport */
             display: flex;
-            width:  100%;
             justify-content: space-between;
             align-items: center;
             background: linear-gradient(to bottom,#c8a4d8, #9d66b4, #605e86 );
@@ -32,31 +30,28 @@
             align-items: center;
             margin: 2%;
             justify-content: space-between;
+            width: 100%;
         }
 
         .logo {
-           
-            margin-right: 20px;
-            font-family: 'Orbitron', sans-serif; /* Fonte para o tema espacial */
-    color: #333;
-    font-size: 55px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona um leve sombreamento ao texto do título */
-
+            margin-right: 2vw; /* Utilizando vw para se ajustar à largura da viewport */
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4vw; /* Utilizando vw para se ajustar à largura da viewport */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .menu {
             list-style-type: none;
             display: flex;
-            margin-left:50px ;
-    font-size: 22px;
-    gap: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona um leve sombreamento ao texto do título */
-    justify-content: end;
-
+            margin-left: 2vw; /* Utilizando vw para se ajustar à largura da viewport */
+            font-size: 2vw; /* Utilizando vw para se ajustar à largura da viewport */
+            gap: 1vw; /* Utilizando vw para se ajustar à largura da viewport */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            justify-content: flex-end;
         }
 
         .menu li {
-            margin-right: 20px;
+            margin-right: 1vw; /* Utilizando vw para se ajustar à largura da viewport */
         }
 
         .menu a {
@@ -64,6 +59,23 @@
             text-decoration: none;
         }
 
+        .dropdown {
+            position: relative;
+        }
+
+        #listasubmenu {
+            list-style-type: none;
+            display: none;
+            position: absolute;
+            top: 30px;
+            background-color: #8e4eaa;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            width: 150px;
+            margin: 10px;
+        }
+
+      
         .dropdown {
             position: relative;
         }
@@ -80,18 +92,6 @@
     margin: 10px;
 }
 
-/* Atualiza o estilo do submenu para torná-lo mais atraente */
-.submenu {
-    display: none;
-    position: absolute;
-    top: 30px;
-    background-color: #8e4eaa;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    width: 150px;
-    margin: 10px;
-    border-radius: 5px; /* Adiciona borda arredondada */
-}
 
 .dropdown-item {
     cursor: pointer;
@@ -324,6 +324,177 @@ button.adicionar-carrinho:hover {
 
 }
 
+#nintendofoto, #playstationfoto,#xboxfoto{
+    display: flex; flex-direction: row; gap: 20px; justify-content: center; align-items: center;
+}
+
+
+       /* Nova regra de mídia para tablets */
+       @media only screen and (max-width: 768px) {
+        .menu {
+                margin-left: 2vw;
+                font-size: 2vw;
+            }
+
+            .logo {
+                font-size: 4vw;
+            }
+
+            .dropdown-content {
+                width: 200px;
+            }
+            
+
+            .games .category {
+                margin-top: 10%; /* Ajusta o espaçamento superior para telas menores */
+            }
+
+            .rolar {
+                overflow-x: auto; /* Altera para rolagem automática em telas menores */
+            }
+
+            .comment-section {
+                margin: 10px; /* Adiciona margem interna para melhor espaçamento em telas menores */
+            }
+
+            textarea {
+                width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+            }
+        }
+
+        /* Nova regra de mídia para tablets pequenos, mini iPads e smartphones */
+        @media only screen and (max-width: 600px) {
+
+            .menu {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 1.5vw;
+                margin: 1vw;
+                margin-top: 2vw;
+                padding: 0;
+                gap: 1vw;
+            }
+
+            .menu li {
+                margin: 0;
+                padding: 0;
+            }
+
+            .logo {
+                font-size: x-large;
+                margin-right: 0;
+            }
+
+            .dropdown-content {
+                width: 100%;
+            }
+
+            nav{
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                justify-content: start;
+            }
+           
+            .games .category {
+                margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
+            }
+
+            .rolar {
+                overflow-x: auto;
+                white-space: normal; /* Permite que os elementos quebrem para a próxima linha */
+            }
+
+            .comment-section {
+                margin: 5px; /* Adiciona margem interna menor para a área de comentários */
+            }
+
+            textarea {
+                width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+            }
+        }
+
+/* Adicione estas regras de mídia para telas menores, como smartphones */
+@media only screen and (max-width: 600px) {
+
+    #nintendofoto, #playstationfoto,#xboxfoto{
+        gap: 15px;
+       height: 20px;
+       width: 100px;
+       align-items: center;
+       margin: 10%;
+      
+       margin-left: 20%;
+       
+    }
+
+    #xboxtitle, #nintendotitle, #playstationtitle{
+        font-size: 20px;
+       
+    }
+
+    .img{
+        width: 110px;
+        height: 80px;
+    }
+
+    .menu{
+        gap: 7px;
+        margin-top: 18px;
+    }
+
+.category {
+    width: 100%; /* Define a largura total para a categoria de jogos em telas menores */
+    margin: 0; /* Remove a margem para evitar espaçamento desnecessário */
+}
+
+.rolar {
+    overflow-x: auto;
+    white-space: normal;
+}
+
+.games .category {
+    margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
+}
+
+.rolar {
+    overflow-x: auto;
+    
+}
+
+.comment-section {
+    margin: 5px; /* Adiciona margem interna menor para a área de comentários */
+}
+
+textarea {
+    width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+}
+
+/* Ajusta a largura dos containers de jogos */
+.category.nintendo-games,
+.category.xbox-games,
+.category.playstation-games {
+    width: 100%;
+}
+
+/* Estilizando o input de quantidade para telas menores */
+input[type="number"] {
+    width: 30px; /* Ajusta a largura do input para ocupar menos espaço */
+    font-size: 14px; /* Reduz o tamanho da fonte do input */
+}
+
+/* Estilizando o botão de adicionar ao carrinho para telas menores */
+button.adicionar-carrinho {
+    width: 120px; /* Ajusta a largura do botão para telas menores */
+    font-size: 12px; /* Reduz o tamanho da fonte do botão */
+}
+
+nav a {
+        font-size: 14px;
+    }
+}
 
     </style>
 </head>
@@ -382,11 +553,6 @@ button.adicionar-carrinho:hover {
     </div>
 </div>
 
-
-
-
-
-
                 </li>
                 <li><a href="user.html">Usuário</a></li>
                 <li><a href="cart.html">Carrinho</a></li>
@@ -401,7 +567,8 @@ button.adicionar-carrinho:hover {
     </div>
     <section class="games">
         <div class="category nintendo-games">
-            <div style="display: flex; flex-direction: row; gap: 20px; justify-content: center; align-items: center;"><a href='https://postimg.cc/PCTXbcY4' target='_blank'><img src='https://i.postimg.cc/PCTXbcY4/nintendo-console.png' border='0' alt='nintendo-console'/></a><h2 id="nintendotitle">Nintendo</h2></div>
+            <div id="nintendofoto">
+               <img class="img" src='https://i.postimg.cc/PCTXbcY4/nintendo-console.png' border='0' alt='nintendo-console'/><h2 id="nintendotitle">Nintendo</h2></div>
             
             <div class="rolar">
             <div id="nintendogames"></div>
@@ -409,8 +576,8 @@ button.adicionar-carrinho:hover {
         </div>
 
         <div class="category xbox-games">
-            <div style="display: flex; flex-direction: row; gap: 20px; justify-content: center; align-items: center;">
-                <a href='https://postimg.cc/PLfqHcqx' target='_blank'><img src='https://i.postimg.cc/PLfqHcqx/ccc5d20152b80b262bf0c56f2c9a8d09-removebg-preview.png' border='0' alt='ccc5d20152b80b262bf0c56f2c9a8d09-removebg-preview'/></a><h2 id="xboxtitle">Xbox</h2>
+            <div id="xboxfoto">
+                <img  class="img" src='https://i.postimg.cc/PLfqHcqx/ccc5d20152b80b262bf0c56f2c9a8d09-removebg-preview.png' border='0' alt='ccc5d20152b80b262bf0c56f2c9a8d09-removebg-preview'/><h2 id="xboxtitle">Xbox</h2>
             
         </div>
             <div class="rolar">
@@ -419,8 +586,8 @@ button.adicionar-carrinho:hover {
         </div>
 
         <div class="category playstation-games">
-            <div style="display: flex; flex-direction: row; gap: 20px; justify-content: center; align-items: center;">
-            <a href='https://postimg.cc/D4Gv53xC' target='_blank'><img src='https://i.postimg.cc/D4Gv53xC/playstationconsole.png' border='0' alt='playstationconsole'/></a><h2 id="playstationtitle">Playstation</h2>
+            <div id="playstationfoto">
+           <img class="img" src='https://i.postimg.cc/D4Gv53xC/playstationconsole.png' border='0' alt='playstationconsole'/><h2 id="playstationtitle">Playstation</h2>
         </div>
             <div class="rolar">
             <div id="playstationgames"></div>
@@ -465,12 +632,7 @@ function mudarBackground(elemento) {
 function restaurarBackground(elemento) {
     elemento.style.backgroundColor = '';
 }
-
-
-
-
-
-    
+ 
         document.addEventListener('DOMContentLoaded', () => {
     // ...
 
@@ -667,7 +829,6 @@ function obterComentariosGerais() {
 document.addEventListener('DOMContentLoaded', () => {
     obterComentariosGerais();
 });
-
 
 </script>
 
