@@ -382,7 +382,87 @@ nav a {
           
         }
      
+        @media only screen and (max-width: 280px) {
+    /* Adapte as regras conforme necessário para melhorar a experiência em dispositivos pequenos */
+    body {
+        font-size: 12px; /* Ajuste o tamanho da fonte para dispositivos pequenos */
+    }
 
+    .logo {
+        font-size: 5vw; /* Ajuste o tamanho da fonte do logo para dispositivos pequenos */
+    }
+
+    .menu {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.5vw;
+            margin: 1vw;
+            margin-top: 2vw;
+            padding: 0;
+            gap: 1vw;
+        }
+
+    
+
+    nav{
+        width: fit-content;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+    
+    .dropdown-content{
+        width: 90%;
+    }
+
+    
+    #imagem{
+        height: 200px;
+        width: 200px;
+        margin: 0%;
+        padding-bottom: 4%;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #imagem2{
+        height: 50px;
+        width: 50px;
+       
+      }
+
+      #detalhes{
+        flex-direction: column;
+        justify-content: center;
+        gap: 20%;
+
+      }
+
+      #textodetalhes{
+        width: 10%;
+        justify-content: center;
+        font-size: 10px;
+        width:70% ;
+
+
+      }
+
+      #descrição{
+        width:86% ;
+        justify-content: center;
+        margin-left: 15px;
+        font-size: 10px;
+      }
+
+      #detalhestitle{
+        font-size: smaller;
+      }
+   
+}
+     
 
 </style>
 </head>

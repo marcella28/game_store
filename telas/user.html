@@ -283,6 +283,44 @@ nav a {
 
         }
 
+        @media only screen and (max-width: 280px) {
+    /* Adapte as regras conforme necessário para melhorar a experiência em dispositivos pequenos */
+    body {
+        font-size: 12px; /* Ajuste o tamanho da fonte para dispositivos pequenos */
+    }
+
+    .logo {
+        font-size: 5vw; /* Ajuste o tamanho da fonte do logo para dispositivos pequenos */
+    }
+
+    .menu {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.5vw;
+            margin: 1vw;
+            margin-top: 2vw;
+            padding: 0;
+            gap: 1vw;
+        }
+
+    .games .category h2 {
+        font-size: 18px; /* Ajuste o tamanho dos títulos das categorias para dispositivos pequenos */
+    }
+
+    nav{
+        width: fit-content;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+
+    .dropdown-content{
+        width: 90%;
+    }
+}
        
 
     </style>
