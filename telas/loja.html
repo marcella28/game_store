@@ -328,6 +328,138 @@ button.adicionar-carrinho:hover {
     display: flex; flex-direction: row; gap: 20px; justify-content: center; align-items: center;
 }
 
+/* Adicione estas regras de mídia para telas menores, como smartphones */
+@media only screen and (max-width: 600px) {
+
+.menu {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.5vw;
+            margin: 1vw;
+            margin-top: 2vw;
+            padding: 0;
+            gap: 1vw;
+        }
+
+        .menu li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo {
+            font-size: x-large;
+            margin-right: 0;
+        }
+
+        .dropdown-content {
+            width: 100%;
+        }
+
+        nav{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: start;
+        }
+       
+        .games .category {
+            margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
+        }
+
+        .rolar {
+            overflow-x: auto;
+            white-space: normal; /* Permite que os elementos quebrem para a próxima linha */
+        }
+
+        .comment-section {
+            margin: 5px; /* Adiciona margem interna menor para a área de comentários */
+        }
+
+        textarea {
+            width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+        }
+
+#nintendofoto, #playstationfoto,#xboxfoto{
+    gap: 15px;
+   height: 20px;
+   width: 100px;
+   align-items: center;
+   margin: 10%;
+  
+   margin-left: 20%;
+   
+}
+
+#xboxtitle, #nintendotitle, #playstationtitle{
+    font-size: 20px;
+   
+}
+
+.img{
+    width: 110px;
+    height: 80px;
+}
+
+.menu{
+    gap: 5px;
+    margin-top: 18px;
+    margin-left: 0%;
+}
+
+.category {
+width: 100%; /* Define a largura total para a categoria de jogos em telas menores */
+margin: 0; /* Remove a margem para evitar espaçamento desnecessário */
+}
+
+.rolar {
+overflow-x: auto;
+white-space: normal;
+}
+
+.games .category {
+margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
+}
+
+.rolar {
+overflow-x: auto;
+
+}
+
+.comment-section {
+margin: 5px; /* Adiciona margem interna menor para a área de comentários */
+}
+
+textarea {
+width: 100%; /* Faz com que a área de comentários ocupe a largura total */
+}
+
+/* Ajusta a largura dos containers de jogos */
+.category.nintendo-games,
+.category.xbox-games,
+.category.playstation-games {
+width: 100%;
+}
+
+/* Estilizando o input de quantidade para telas menores */
+input[type="number"] {
+width: 30px; /* Ajusta a largura do input para ocupar menos espaço */
+font-size: 14px; /* Reduz o tamanho da fonte do input */
+}
+
+/* Estilizando o botão de adicionar ao carrinho para telas menores */
+button.adicionar-carrinho {
+width: 120px; /* Ajusta a largura do botão para telas menores */
+font-size: 12px; /* Reduz o tamanho da fonte do botão */
+}
+
+nav a {
+    font-size: 14px;
+}
+}
+
+
 
        /* Nova regra de mídia para tablets */
        @media only screen and (max-width: 768px) {
@@ -362,140 +494,8 @@ button.adicionar-carrinho:hover {
             }
         }
 
-        /* Nova regra de mídia para tablets pequenos, mini iPads e smartphones */
-        @media only screen and (max-width: 600px) {
-
-            .menu {
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                font-size: 1.5vw;
-                margin: 1vw;
-                margin-top: 2vw;
-                padding: 0;
-                gap: 1vw;
-            }
-
-            .menu li {
-                margin: 0;
-                padding: 0;
-            }
-
-            .logo {
-                font-size: x-large;
-                margin-right: 0;
-            }
-
-            .dropdown-content {
-                width: 100%;
-            }
-
-            nav{
-                display: flex;
-                flex-direction: column;
-                align-items: start;
-                justify-content: start;
-            }
-           
-            .games .category {
-                margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
-            }
-
-            .rolar {
-                overflow-x: auto;
-                white-space: normal; /* Permite que os elementos quebrem para a próxima linha */
-            }
-
-            .comment-section {
-                margin: 5px; /* Adiciona margem interna menor para a área de comentários */
-            }
-
-            textarea {
-                width: 100%; /* Faz com que a área de comentários ocupe a largura total */
-            }
-        }
-
-/* Adicione estas regras de mídia para telas menores, como smartphones */
-@media only screen and (max-width: 600px) {
-
-    #nintendofoto, #playstationfoto,#xboxfoto{
-        gap: 15px;
-       height: 20px;
-       width: 100px;
-       align-items: center;
-       margin: 10%;
-      
-       margin-left: 20%;
        
-    }
 
-    #xboxtitle, #nintendotitle, #playstationtitle{
-        font-size: 20px;
-       
-    }
-
-    .img{
-        width: 110px;
-        height: 80px;
-    }
-
-    .menu{
-        gap: 5px;
-        margin-top: 18px;
-        margin-left: 0%;
-    }
-
-.category {
-    width: 100%; /* Define a largura total para a categoria de jogos em telas menores */
-    margin: 0; /* Remove a margem para evitar espaçamento desnecessário */
-}
-
-.rolar {
-    overflow-x: auto;
-    white-space: normal;
-}
-
-.games .category {
-    margin-top: 5%; /* Ajusta a margem superior da categoria de jogos */
-}
-
-.rolar {
-    overflow-x: auto;
-    
-}
-
-.comment-section {
-    margin: 5px; /* Adiciona margem interna menor para a área de comentários */
-}
-
-textarea {
-    width: 100%; /* Faz com que a área de comentários ocupe a largura total */
-}
-
-/* Ajusta a largura dos containers de jogos */
-.category.nintendo-games,
-.category.xbox-games,
-.category.playstation-games {
-    width: 100%;
-}
-
-/* Estilizando o input de quantidade para telas menores */
-input[type="number"] {
-    width: 30px; /* Ajusta a largura do input para ocupar menos espaço */
-    font-size: 14px; /* Reduz o tamanho da fonte do input */
-}
-
-/* Estilizando o botão de adicionar ao carrinho para telas menores */
-button.adicionar-carrinho {
-    width: 120px; /* Ajusta a largura do botão para telas menores */
-    font-size: 12px; /* Reduz o tamanho da fonte do botão */
-}
-
-nav a {
-        font-size: 14px;
-    }
-}
 
     </style>
 </head>
