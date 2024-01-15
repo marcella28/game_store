@@ -11,9 +11,9 @@ const config = {
         port: 3000
     },
     database: {
-        host: 'localhost',
-        user: 'root',
-        password: 'acesso123',
+        host: 'localhost', // ou 'localhost' se estiver na mesma máquina
+        user: 'marcellinha',
+        password: '123',
         database: 'game_store'
     }
 };
