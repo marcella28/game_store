@@ -11,13 +11,13 @@ const config = {
         port: 3000
     },
     database: {
-        host: 'localhost', // ou 'localhost' se estiver na mesma máquina
-        user: 'marcellinha',
-        password: '123',
+        host: 'localhost',
+        user: 'root',
+        password: 'acesso123',
         database: 'game_store'
     }
 };
-const ipAddress = '0.0.0.0'; // Isso permite que o servidor escute em todas as interfaces
+const ipAddress = '172.16.31.38'; //Endereço IP da máquina
 
  
 
