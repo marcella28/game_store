@@ -17,7 +17,7 @@ const config = {
         database: 'game_store'
     }
 };
-const ipAddress = '172.16.31.38'; //Endereço IP da máquina
+const ipAddress = '0.0.0.0'; // Isso permite que o servidor escute em todas as interfaces
 
  
 
